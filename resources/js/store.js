@@ -5,7 +5,7 @@ Vue.use(Vuex)
 const state = {
 	session:{
 	},
-	apiUrl: 'http://localhost/school/public/',
+	apiUrl: 'http://192.168.11.30/school/public/',
 	overlay: false,
 	isLoading: false
 }

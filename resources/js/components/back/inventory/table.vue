@@ -248,17 +248,17 @@
 
 		      <v-tab href="#tab-1">
 		        Detail
-		        <v-icon>mdi-detail</v-icon>
+		        <v-icon>mdi-details</v-icon>
 		      </v-tab>
 
-		      <v-tab href="#tab-2">
-		        Perpindahan
-		        <v-icon>mdi-folder-move</v-icon>
+			  <v-tab href="#tab-2">
+		        Penerimaan
+		        <v-icon>mdi-hand-left</v-icon>
 		      </v-tab>
 
 		      <v-tab href="#tab-3">
-		        Penerimaan
-		        <v-icon>mdi-hand-left</v-icon>
+		        Perpindahan
+		        <v-icon>mdi-folder-move</v-icon>
 		      </v-tab>
 
 		      <v-tab href="#tab-4">
@@ -315,10 +315,10 @@
 		      <v-tab-item value="tab-3">
 		        <v-card flat>
 		          <v-card-text>
-		          	<v-list-item two-line >
+		          	<v-list-item three-line v-for="move in assetDetail.moves" :key="move.id">
 			          	<v-list-item-content>
-					        <v-list-item-title>Two-line item</v-list-item-title>
-					        <v-list-item-subtitle>Secondary text</v-list-item-subtitle>
+					        <v-list-item-title>dipindah ke {{move.room_name}} oleh {{move.created_by}} pada tanggal {{move.move_date}} ({{move.move_description}})</v-list-item-title>
+					        <v-list-item-subtitle><span class="caption">dicatat oleh {{move.mover_name}} pada {{move.move_date}}</span></v-list-item-subtitle>
 					    </v-list-item-content>
 		          	</v-list-item>
 		           </v-card-text>
@@ -495,7 +495,6 @@ export default{
 	    	this.moveModal = false;
 	    },
 	    saveAssetMove: function(){
-	    	console.log(this.editedMoveItem);
 	    	axios.post(this.$store.state.apiUrl + 'move',{
 	    		editedItem: this.editedMoveItem	
 	    	}).then(response=>{

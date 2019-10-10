@@ -2561,7 +2561,6 @@ __webpack_require__.r(__webpack_exports__);
     saveAssetMove: function saveAssetMove() {
       var _this7 = this;
 
-      console.log(this.editedMoveItem);
       axios.post(this.$store.state.apiUrl + 'move', {
         editedItem: this.editedMoveItem
       }).then(function (response) {
@@ -52489,7 +52488,7 @@ var render = function() {
                     { attrs: { href: "#tab-1" } },
                     [
                       _vm._v("\r\n\t\t        Detail\r\n\t\t        "),
-                      _c("v-icon", [_vm._v("mdi-detail")])
+                      _c("v-icon", [_vm._v("mdi-details")])
                     ],
                     1
                   ),
@@ -52498,8 +52497,8 @@ var render = function() {
                     "v-tab",
                     { attrs: { href: "#tab-2" } },
                     [
-                      _vm._v("\r\n\t\t        Perpindahan\r\n\t\t        "),
-                      _c("v-icon", [_vm._v("mdi-folder-move")])
+                      _vm._v("\r\n\t\t        Penerimaan\r\n\t\t        "),
+                      _c("v-icon", [_vm._v("mdi-hand-left")])
                     ],
                     1
                   ),
@@ -52508,8 +52507,8 @@ var render = function() {
                     "v-tab",
                     { attrs: { href: "#tab-3" } },
                     [
-                      _vm._v("\r\n\t\t        Penerimaan\r\n\t\t        "),
-                      _c("v-icon", [_vm._v("mdi-hand-left")])
+                      _vm._v("\r\n\t\t        Perpindahan\r\n\t\t        "),
+                      _c("v-icon", [_vm._v("mdi-folder-move")])
                     ],
                     1
                   ),
@@ -52700,20 +52699,37 @@ var render = function() {
                         [
                           _c(
                             "v-card-text",
-                            [
-                              _c(
+                            _vm._l(_vm.assetDetail.moves, function(move) {
+                              return _c(
                                 "v-list-item",
-                                { attrs: { "two-line": "" } },
+                                { key: move.id, attrs: { "three-line": "" } },
                                 [
                                   _c(
                                     "v-list-item-content",
                                     [
                                       _c("v-list-item-title", [
-                                        _vm._v("Two-line item")
+                                        _vm._v(
+                                          "dipindah ke " +
+                                            _vm._s(move.room_name) +
+                                            " oleh " +
+                                            _vm._s(move.created_by) +
+                                            " pada tanggal " +
+                                            _vm._s(move.move_date) +
+                                            " (" +
+                                            _vm._s(move.move_description) +
+                                            ")"
+                                        )
                                       ]),
                                       _vm._v(" "),
                                       _c("v-list-item-subtitle", [
-                                        _vm._v("Secondary text")
+                                        _c("span", { staticClass: "caption" }, [
+                                          _vm._v(
+                                            "dicatat oleh " +
+                                              _vm._s(move.mover_name) +
+                                              " pada " +
+                                              _vm._s(move.move_date)
+                                          )
+                                        ])
                                       ])
                                     ],
                                     1
@@ -52721,7 +52737,7 @@ var render = function() {
                                 ],
                                 1
                               )
-                            ],
+                            }),
                             1
                           )
                         ],
@@ -107914,7 +107930,7 @@ __webpack_require__.r(__webpack_exports__);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__["default"]);
 var state = {
   session: {},
-  apiUrl: 'http://localhost/school/public/',
+  apiUrl: 'http://192.168.11.30/school/public/',
   overlay: false,
   isLoading: false
 };
