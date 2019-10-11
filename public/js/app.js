@@ -2371,6 +2371,24 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -52161,151 +52179,257 @@ var render = function() {
                         [
                           _c(
                             "v-col",
-                            { attrs: { cols: "12", sm: "6", md: "4" } },
-                            [
-                              _c("v-text-field", {
-                                attrs: { label: "Nama Barang", readonly: "" },
-                                model: {
-                                  value: _vm.editedMoveItem.asset_name,
-                                  callback: function($$v) {
-                                    _vm.$set(
-                                      _vm.editedMoveItem,
-                                      "asset_name",
-                                      $$v
-                                    )
-                                  },
-                                  expression: "editedMoveItem.asset_name"
-                                }
-                              })
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "v-col",
-                            { attrs: { cols: "12", sm: "6", md: "4" } },
-                            [
-                              _c("v-text-field", {
-                                attrs: {
-                                  label: "Kode Inventaris",
-                                  readonly: ""
-                                },
-                                model: {
-                                  value:
-                                    _vm.editedMoveItem.asset_inventory_code,
-                                  callback: function($$v) {
-                                    _vm.$set(
-                                      _vm.editedMoveItem,
-                                      "asset_inventory_code",
-                                      $$v
-                                    )
-                                  },
-                                  expression:
-                                    "editedMoveItem.asset_inventory_code"
-                                }
-                              })
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "v-col",
-                            { attrs: { cols: "12", sm: "6", md: "4" } },
-                            [
-                              _c("v-text-field", {
-                                attrs: { label: "No Inventaris", readonly: "" },
-                                model: {
-                                  value:
-                                    _vm.editedMoveItem.asset_inventory_numb,
-                                  callback: function($$v) {
-                                    _vm.$set(
-                                      _vm.editedMoveItem,
-                                      "asset_inventory_numb",
-                                      $$v
-                                    )
-                                  },
-                                  expression:
-                                    "editedMoveItem.asset_inventory_numb"
-                                }
-                              })
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "v-col",
-                            { attrs: { cols: "12", sm: "6", md: "4" } },
-                            [
-                              _c("v-text-field", {
-                                attrs: { label: "Serial Number", readonly: "" },
-                                model: {
-                                  value: _vm.editedMoveItem.asset_serial_numb,
-                                  callback: function($$v) {
-                                    _vm.$set(
-                                      _vm.editedMoveItem,
-                                      "asset_serial_numb",
-                                      $$v
-                                    )
-                                  },
-                                  expression: "editedMoveItem.asset_serial_numb"
-                                }
-                              })
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "v-col",
-                            { attrs: { cols: "12", sm: "6", md: "4" } },
-                            [
-                              _c("v-autocomplete", {
-                                attrs: {
-                                  label: "Pemindah",
-                                  items: _vm.autocompleteUser
-                                },
-                                model: {
-                                  value: _vm.editedMoveItem.mover_id,
-                                  callback: function($$v) {
-                                    _vm.$set(
-                                      _vm.editedMoveItem,
-                                      "mover_id",
-                                      $$v
-                                    )
-                                  },
-                                  expression: "editedMoveItem.mover_id"
-                                }
-                              })
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "v-col",
-                            { attrs: { cols: "12", sm: "6", md: "4" } },
+                            { attrs: { cols: "12", sm: "12", md: "9" } },
                             [
                               _c(
-                                "v-menu",
-                                {
-                                  attrs: {
-                                    "close-on-content-click": false,
-                                    "nudge-right": 40,
-                                    transition: "scale-transition",
-                                    "offset-y": "",
-                                    "min-width": "290px"
-                                  },
-                                  scopedSlots: _vm._u([
-                                    {
-                                      key: "activator",
-                                      fn: function(ref) {
-                                        var on = ref.on
-                                        return [
+                                "v-container",
+                                [
+                                  _c(
+                                    "v-row",
+                                    [
+                                      _c(
+                                        "v-col",
+                                        {
+                                          attrs: {
+                                            cols: "12",
+                                            sm: "6",
+                                            md: "4"
+                                          }
+                                        },
+                                        [
+                                          _c("v-text-field", {
+                                            attrs: {
+                                              label: "Nama Barang",
+                                              readonly: ""
+                                            },
+                                            model: {
+                                              value:
+                                                _vm.editedMoveItem.asset_name,
+                                              callback: function($$v) {
+                                                _vm.$set(
+                                                  _vm.editedMoveItem,
+                                                  "asset_name",
+                                                  $$v
+                                                )
+                                              },
+                                              expression:
+                                                "editedMoveItem.asset_name"
+                                            }
+                                          })
+                                        ],
+                                        1
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-col",
+                                        {
+                                          attrs: {
+                                            cols: "12",
+                                            sm: "6",
+                                            md: "4"
+                                          }
+                                        },
+                                        [
+                                          _c("v-text-field", {
+                                            attrs: {
+                                              label: "Kode Inventaris",
+                                              readonly: ""
+                                            },
+                                            model: {
+                                              value:
+                                                _vm.editedMoveItem
+                                                  .asset_inventory_code,
+                                              callback: function($$v) {
+                                                _vm.$set(
+                                                  _vm.editedMoveItem,
+                                                  "asset_inventory_code",
+                                                  $$v
+                                                )
+                                              },
+                                              expression:
+                                                "editedMoveItem.asset_inventory_code"
+                                            }
+                                          })
+                                        ],
+                                        1
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-col",
+                                        {
+                                          attrs: {
+                                            cols: "12",
+                                            sm: "6",
+                                            md: "4"
+                                          }
+                                        },
+                                        [
+                                          _c("v-text-field", {
+                                            attrs: {
+                                              label: "No Inventaris",
+                                              readonly: ""
+                                            },
+                                            model: {
+                                              value:
+                                                _vm.editedMoveItem
+                                                  .asset_inventory_numb,
+                                              callback: function($$v) {
+                                                _vm.$set(
+                                                  _vm.editedMoveItem,
+                                                  "asset_inventory_numb",
+                                                  $$v
+                                                )
+                                              },
+                                              expression:
+                                                "editedMoveItem.asset_inventory_numb"
+                                            }
+                                          })
+                                        ],
+                                        1
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-col",
+                                        {
+                                          attrs: {
+                                            cols: "12",
+                                            sm: "6",
+                                            md: "4"
+                                          }
+                                        },
+                                        [
+                                          _c("v-text-field", {
+                                            attrs: {
+                                              label: "Serial Number",
+                                              readonly: ""
+                                            },
+                                            model: {
+                                              value:
+                                                _vm.editedMoveItem
+                                                  .asset_serial_numb,
+                                              callback: function($$v) {
+                                                _vm.$set(
+                                                  _vm.editedMoveItem,
+                                                  "asset_serial_numb",
+                                                  $$v
+                                                )
+                                              },
+                                              expression:
+                                                "editedMoveItem.asset_serial_numb"
+                                            }
+                                          })
+                                        ],
+                                        1
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-col",
+                                        {
+                                          attrs: {
+                                            cols: "12",
+                                            sm: "6",
+                                            md: "4"
+                                          }
+                                        },
+                                        [
+                                          _c("v-autocomplete", {
+                                            attrs: {
+                                              label: "Pemindah",
+                                              items: _vm.autocompleteUser
+                                            },
+                                            model: {
+                                              value:
+                                                _vm.editedMoveItem.mover_id,
+                                              callback: function($$v) {
+                                                _vm.$set(
+                                                  _vm.editedMoveItem,
+                                                  "mover_id",
+                                                  $$v
+                                                )
+                                              },
+                                              expression:
+                                                "editedMoveItem.mover_id"
+                                            }
+                                          })
+                                        ],
+                                        1
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-col",
+                                        {
+                                          attrs: {
+                                            cols: "12",
+                                            sm: "6",
+                                            md: "4"
+                                          }
+                                        },
+                                        [
                                           _c(
-                                            "v-text-field",
-                                            _vm._g(
-                                              {
-                                                attrs: {
-                                                  label: "Tanggal Dipindah",
-                                                  readonly: ""
+                                            "v-menu",
+                                            {
+                                              attrs: {
+                                                "close-on-content-click": false,
+                                                "nudge-right": 40,
+                                                transition: "scale-transition",
+                                                "offset-y": "",
+                                                "min-width": "290px"
+                                              },
+                                              scopedSlots: _vm._u([
+                                                {
+                                                  key: "activator",
+                                                  fn: function(ref) {
+                                                    var on = ref.on
+                                                    return [
+                                                      _c(
+                                                        "v-text-field",
+                                                        _vm._g(
+                                                          {
+                                                            attrs: {
+                                                              label:
+                                                                "Tanggal Dipindah",
+                                                              readonly: ""
+                                                            },
+                                                            model: {
+                                                              value:
+                                                                _vm
+                                                                  .editedMoveItem
+                                                                  .move_date,
+                                                              callback: function(
+                                                                $$v
+                                                              ) {
+                                                                _vm.$set(
+                                                                  _vm.editedMoveItem,
+                                                                  "move_date",
+                                                                  $$v
+                                                                )
+                                                              },
+                                                              expression:
+                                                                "editedMoveItem.move_date"
+                                                            }
+                                                          },
+                                                          on
+                                                        )
+                                                      )
+                                                    ]
+                                                  }
+                                                }
+                                              ]),
+                                              model: {
+                                                value: _vm.moveDateMenu,
+                                                callback: function($$v) {
+                                                  _vm.moveDateMenu = $$v
+                                                },
+                                                expression: "moveDateMenu"
+                                              }
+                                            },
+                                            [
+                                              _vm._v(" "),
+                                              _c("v-date-picker", {
+                                                on: {
+                                                  input: function($event) {
+                                                    _vm.moveDateMenu = false
+                                                  }
                                                 },
                                                 model: {
                                                   value:
@@ -52321,42 +52445,79 @@ var render = function() {
                                                   expression:
                                                     "editedMoveItem.move_date"
                                                 }
-                                              },
-                                              on
-                                            )
+                                              })
+                                            ],
+                                            1
                                           )
-                                        ]
-                                      }
-                                    }
-                                  ]),
-                                  model: {
-                                    value: _vm.moveDateMenu,
-                                    callback: function($$v) {
-                                      _vm.moveDateMenu = $$v
-                                    },
-                                    expression: "moveDateMenu"
-                                  }
-                                },
-                                [
-                                  _vm._v(" "),
-                                  _c("v-date-picker", {
-                                    on: {
-                                      input: function($event) {
-                                        _vm.moveDateMenu = false
-                                      }
-                                    },
-                                    model: {
-                                      value: _vm.editedMoveItem.move_date,
-                                      callback: function($$v) {
-                                        _vm.$set(
-                                          _vm.editedMoveItem,
-                                          "move_date",
-                                          $$v
-                                        )
-                                      },
-                                      expression: "editedMoveItem.move_date"
-                                    }
-                                  })
+                                        ],
+                                        1
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-col",
+                                        {
+                                          attrs: {
+                                            cols: "12",
+                                            sm: "6",
+                                            md: "4"
+                                          }
+                                        },
+                                        [
+                                          _c("v-autocomplete", {
+                                            attrs: {
+                                              label: "Dipindah di",
+                                              items: _vm.autocompleteRoom
+                                            },
+                                            model: {
+                                              value: _vm.editedMoveItem.room_id,
+                                              callback: function($$v) {
+                                                _vm.$set(
+                                                  _vm.editedMoveItem,
+                                                  "room_id",
+                                                  $$v
+                                                )
+                                              },
+                                              expression:
+                                                "editedMoveItem.room_id"
+                                            }
+                                          })
+                                        ],
+                                        1
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "v-col",
+                                        {
+                                          attrs: {
+                                            cols: "12",
+                                            sm: "6",
+                                            md: "6"
+                                          }
+                                        },
+                                        [
+                                          _c("v-text-field", {
+                                            attrs: { label: "Keterangan" },
+                                            model: {
+                                              value:
+                                                _vm.editedMoveItem
+                                                  .move_description,
+                                              callback: function($$v) {
+                                                _vm.$set(
+                                                  _vm.editedMoveItem,
+                                                  "move_description",
+                                                  $$v
+                                                )
+                                              },
+                                              expression:
+                                                "editedMoveItem.move_description"
+                                            }
+                                          })
+                                        ],
+                                        1
+                                      )
+                                    ],
+                                    1
+                                  )
                                 ],
                                 1
                               )
@@ -52366,43 +52527,71 @@ var render = function() {
                           _vm._v(" "),
                           _c(
                             "v-col",
-                            { attrs: { cols: "12", sm: "6", md: "4" } },
+                            { attrs: { cols: "12", sm: "12", md: "3" } },
                             [
-                              _c("v-autocomplete", {
-                                attrs: {
-                                  label: "Dipindah di",
-                                  items: _vm.autocompleteRoom
-                                },
-                                model: {
-                                  value: _vm.editedMoveItem.room_id,
-                                  callback: function($$v) {
-                                    _vm.$set(_vm.editedMoveItem, "room_id", $$v)
-                                  },
-                                  expression: "editedMoveItem.room_id"
-                                }
-                              })
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "v-col",
-                            { attrs: { cols: "12", sm: "6", md: "6" } },
-                            [
-                              _c("v-text-field", {
-                                attrs: { label: "Keterangan" },
-                                model: {
-                                  value: _vm.editedMoveItem.move_description,
-                                  callback: function($$v) {
-                                    _vm.$set(
-                                      _vm.editedMoveItem,
-                                      "move_description",
-                                      $$v
-                                    )
-                                  },
-                                  expression: "editedMoveItem.move_description"
-                                }
-                              })
+                              _c(
+                                "v-card",
+                                { attrs: { flat: "" } },
+                                [
+                                  _c(
+                                    "v-card-text",
+                                    _vm._l(_vm.assetDetail.moves, function(
+                                      move
+                                    ) {
+                                      return _c(
+                                        "v-list-item",
+                                        {
+                                          key: move.id,
+                                          attrs: { "three-line": "" }
+                                        },
+                                        [
+                                          _c(
+                                            "v-list-item-content",
+                                            [
+                                              _c("v-list-item-title", [
+                                                _vm._v(
+                                                  "dipindah ke " +
+                                                    _vm._s(move.room_name) +
+                                                    " oleh " +
+                                                    _vm._s(move.created_by) +
+                                                    " pada tanggal " +
+                                                    _vm._s(move.move_date) +
+                                                    " (" +
+                                                    _vm._s(
+                                                      move.move_description
+                                                    ) +
+                                                    ")"
+                                                )
+                                              ]),
+                                              _vm._v(" "),
+                                              _c("v-list-item-subtitle", [
+                                                _c(
+                                                  "span",
+                                                  { staticClass: "caption" },
+                                                  [
+                                                    _vm._v(
+                                                      "dicatat oleh " +
+                                                        _vm._s(
+                                                          move.mover_name
+                                                        ) +
+                                                        " pada " +
+                                                        _vm._s(move.move_date)
+                                                    )
+                                                  ]
+                                                )
+                                              ])
+                                            ],
+                                            1
+                                          )
+                                        ],
+                                        1
+                                      )
+                                    }),
+                                    1
+                                  )
+                                ],
+                                1
+                              )
                             ],
                             1
                           )
@@ -52852,7 +53041,11 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    [_c("v-footer", { attrs: { app: "" } }, [_c("span", [_vm._v("© 2019")])])],
+    [
+      _c("v-footer", { attrs: { app: "" } }, [
+        _c("span", [_vm._v("Denies Kresna B © 2019")])
+      ])
+    ],
     1
   )
 }
@@ -107930,7 +108123,7 @@ __webpack_require__.r(__webpack_exports__);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__["default"]);
 var state = {
   session: {},
-  apiUrl: 'http://192.168.11.30/school/public/',
+  apiUrl: 'http://192.168.193.135/school/public/',
   overlay: false,
   isLoading: false
 };

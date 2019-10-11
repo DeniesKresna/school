@@ -180,49 +180,67 @@
 			<v-card-text>
 			    <v-container>
 			        <v-row>
-			            <v-col cols="12" sm="6" md="4">
-			                <v-text-field v-model="editedMoveItem.asset_name" label="Nama Barang" readonly></v-text-field>
-			            </v-col>
-			            <v-col cols="12" sm="6" md="4">
-			                <v-text-field v-model="editedMoveItem.asset_inventory_code" label="Kode Inventaris" readonly></v-text-field>
-			            </v-col>
-			            <v-col cols="12" sm="6" md="4">
-			                <v-text-field v-model="editedMoveItem.asset_inventory_numb" label="No Inventaris" readonly></v-text-field>
-			            </v-col>
-			            <v-col cols="12" sm="6" md="4">
-			                <v-text-field v-model="editedMoveItem.asset_serial_numb" label="Serial Number" readonly></v-text-field>
-			            </v-col>
-			            <v-col cols="12" sm="6" md="4">
-			                <v-autocomplete v-model="editedMoveItem.mover_id" label="Pemindah" :items="autocompleteUser"
-									    ></v-autocomplete>
-			            </v-col>
-			            <v-col cols="12" sm="6" md="4">
-						    <v-menu
-						        v-model="moveDateMenu"
-						        :close-on-content-click="false"
-						        :nudge-right="40"
-						        transition="scale-transition"
-						        offset-y
-						        min-width="290px"
-						    >
-						        <template v-slot:activator="{ on }">
-						            <v-text-field
-							            v-model="editedMoveItem.move_date"
-							            label="Tanggal Dipindah"
-							            readonly
-							            v-on="on"
-							        ></v-text-field>
-							    </template>
-						        <v-date-picker v-model="editedMoveItem.move_date" @input="moveDateMenu = false"></v-date-picker>
-						    </v-menu>
+			        	<v-col cols="12" sm="12" md="9">
+			        		<v-container>
+			        			<v-row>
+						            <v-col cols="12" sm="6" md="4">
+						                <v-text-field v-model="editedMoveItem.asset_name" label="Nama Barang" readonly></v-text-field>
+						            </v-col>
+						            <v-col cols="12" sm="6" md="4">
+						                <v-text-field v-model="editedMoveItem.asset_inventory_code" label="Kode Inventaris" readonly></v-text-field>
+						            </v-col>
+						            <v-col cols="12" sm="6" md="4">
+						                <v-text-field v-model="editedMoveItem.asset_inventory_numb" label="No Inventaris" readonly></v-text-field>
+						            </v-col>
+						            <v-col cols="12" sm="6" md="4">
+						                <v-text-field v-model="editedMoveItem.asset_serial_numb" label="Serial Number" readonly></v-text-field>
+						            </v-col>
+						            <v-col cols="12" sm="6" md="4">
+						                <v-autocomplete v-model="editedMoveItem.mover_id" label="Pemindah" :items="autocompleteUser"
+												    ></v-autocomplete>
+						            </v-col>
+						            <v-col cols="12" sm="6" md="4">
+									    <v-menu
+									        v-model="moveDateMenu"
+									        :close-on-content-click="false"
+									        :nudge-right="40"
+									        transition="scale-transition"
+									        offset-y
+									        min-width="290px"
+									    >
+									        <template v-slot:activator="{ on }">
+									            <v-text-field
+										            v-model="editedMoveItem.move_date"
+										            label="Tanggal Dipindah"
+										            readonly
+										            v-on="on"
+										        ></v-text-field>
+										    </template>
+									        <v-date-picker v-model="editedMoveItem.move_date" @input="moveDateMenu = false"></v-date-picker>
+									    </v-menu>
+									</v-col>
+						            <v-col cols="12" sm="6" md="4">
+						                <v-autocomplete v-model="editedMoveItem.room_id" label="Dipindah di" :items="autocompleteRoom"
+												    ></v-autocomplete>
+						            </v-col>
+						            <v-col cols="12" sm="6" md="6">
+						                <v-text-field v-model="editedMoveItem.move_description" label="Keterangan"></v-text-field>
+						            </v-col>
+						        </v-row>
+						    </v-container>
 						</v-col>
-			            <v-col cols="12" sm="6" md="4">
-			                <v-autocomplete v-model="editedMoveItem.room_id" label="Dipindah di" :items="autocompleteRoom"
-									    ></v-autocomplete>
-			            </v-col>
-			            <v-col cols="12" sm="6" md="6">
-			                <v-text-field v-model="editedMoveItem.move_description" label="Keterangan"></v-text-field>
-			            </v-col>
+						<v-col cols="12" sm="12" md="3">
+			        		<v-card flat>
+					          <v-card-text>
+					          	<v-list-item three-line v-for="move in assetDetail.moves" :key="move.id">
+						          	<v-list-item-content>
+								        <v-list-item-title>dipindah ke {{move.room_name}} oleh {{move.created_by}} pada tanggal {{move.move_date}} ({{move.move_description}})</v-list-item-title>
+								        <v-list-item-subtitle><span class="caption">dicatat oleh {{move.mover_name}} pada {{move.move_date}}</span></v-list-item-subtitle>
+								    </v-list-item-content>
+					          	</v-list-item>
+					           </v-card-text>
+					        </v-card>
+					    </v-col>
 			        </v-row>
 			    </v-container>
 			</v-card-text>
