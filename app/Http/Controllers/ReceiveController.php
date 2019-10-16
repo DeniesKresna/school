@@ -18,7 +18,7 @@ class ReceiveController extends Controller
         //return response()->json(['req'=>$req],422);
     	$receive->asset_id = $asset_id;
     	$receive->receive_sender_identity = $req['receive_sender_identity'];
-    	$receive->receive_date = $req['receive_date'];
+    	$receive->receive_at = $req['receive_at'];
     	$receive->receive_bill_date = $req['receive_bill_date'];
     	$receive->receive_bill_number = $req['receive_bill_number'];
     	$receive->receiver_id = $req['receiver_id'];
@@ -31,7 +31,7 @@ class ReceiveController extends Controller
         $condition->asset_id = $asset_id;
         $condition->condition_description = $conditiontype['conditiontype_name'];
         $condition->conditiontype_id = $conditiontype['id'];
-        $condition->condition_date = $req['receive_date'];
+        $condition->condition_at = $req['receive_at'];
         $condition->condition_created_by = 1;
         $condition->condition_updated_by = 1;
         $condition->save();
@@ -39,7 +39,7 @@ class ReceiveController extends Controller
         $move =  new Move;
         $move->asset_id = $asset_id;
         $move->move_description = "Penerimaan Barang";
-        $move->move_date = $req['receive_date'];
+        $move->move_at = $req['receive_at'];
         $move->mover_id = $req['receiver_id'];
         $move->room_id = $req['room_id'];
         $move->move_created_by = 1;

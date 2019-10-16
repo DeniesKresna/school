@@ -10,6 +10,7 @@ import VeeValidate from 'vee-validate';
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
 import vuetify from './vuetify'
+import DatetimePicker from 'vuetify-datetime-picker'
     
 window.Vue = require('vue');
 //require('vue-axios-interceptors');
@@ -20,6 +21,7 @@ filters.forEach(f => {
 
 Vue.use(VueSwal);
 Vue.use(VeeValidate);
+Vue.use(DatetimePicker)
 
 /*
 Vue.use(Loading, {

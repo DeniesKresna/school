@@ -57,6 +57,7 @@
 							      </v-menu>
 							    </v-col>
 				                <v-col cols="12" sm="6" md="4">
+				                	<v-datetime-picker label="Select Datetime" v-model="editedItem.receive_at"> </v-datetime-picker><!--
 							      <v-menu
 							        v-model="receiveDateMenu"
 							        :close-on-content-click="false"
@@ -67,14 +68,14 @@
 							      >
 							        <template v-slot:activator="{ on }">
 							          <v-text-field
-							            v-model="editedItem.receive_date"
+							            v-model="editedItem.receive_at"
 							            label="Tanggal Terima"
 							            readonly
 							            v-on="on"
 							          ></v-text-field>
 							        </template>
-							        <v-date-picker v-model="editedItem.receive_date" @input="receiveDateMenu = false"></v-date-picker>
-							      </v-menu>
+							        <v-date-picker v-model="editedItem.receive_at" @input="receiveDateMenu = false"></v-date-picker>
+							      </v-menu>-->
 							    </v-col>
 				                <v-col cols="12" sm="6" md="4">
 				                    <v-text-field v-model="editedItem.receive_bill_number" label="Nomor Pengiriman"></v-text-field>
@@ -120,7 +121,7 @@ export default{
 		return{
 			show_panel: [],
 			editedItem: {
-				receive_date: new Date().toISOString().substr(0, 10),
+				receive_at: new Date(),
 				receive_bill_date: new Date().toISOString().substr(0, 10)
 			},
 			editCategories: [],
@@ -168,7 +169,7 @@ export default{
 		},
 		resetEditedItem: function(){
 			this.editedItem = {
-				receive_date: new Date().toISOString().substr(0, 10),
+				receive_at: new Date().toISOString().substr(0, 10),
 				receive_bill_date: new Date().toISOString().substr(0, 10)
 			}
 		}

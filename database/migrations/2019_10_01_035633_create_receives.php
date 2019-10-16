@@ -16,7 +16,7 @@ class CreateReceives extends Migration
         Schema::create('receives', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('asset_id');
-            $table->date('receive_date');
+            $table->datetime('receive_at');
             $table->string('receive_sender_identity');
             $table->date('receive_bill_date');
             $table->string('receive_bill_number');

@@ -180,7 +180,7 @@
 			<v-card-text>
 			    <v-container>
 			        <v-row>
-			        	<v-col cols="12" sm="12" md="9">
+			        	<v-col cols="12" sm="12" md="8">
 			        		<v-container>
 			        			<v-row>
 						            <v-col cols="12" sm="6" md="4">
@@ -200,8 +200,9 @@
 												    ></v-autocomplete>
 						            </v-col>
 						            <v-col cols="12" sm="6" md="4">
+						            	<v-datetime-picker label="Tanggal pindah" v-model="editedMoveItem.move_at"> </v-datetime-picker><!--
 									    <v-menu
-									        v-model="moveDateMenu"
+									        v-model="moveDateTimeMenu"
 									        :close-on-content-click="false"
 									        :nudge-right="40"
 									        transition="scale-transition"
@@ -210,14 +211,14 @@
 									    >
 									        <template v-slot:activator="{ on }">
 									            <v-text-field
-										            v-model="editedMoveItem.move_date"
+										            v-model="editedMoveItem.move_at"
 										            label="Tanggal Dipindah"
 										            readonly
 										            v-on="on"
 										        ></v-text-field>
 										    </template>
-									        <v-date-picker v-model="editedMoveItem.move_date" @input="moveDateMenu = false"></v-date-picker>
-									    </v-menu>
+									        <v-date-picker v-model="editedMoveItem.move_at" @input="moveDateMenu = false"></v-date-picker>
+									    </v-menu>-->
 									</v-col>
 						            <v-col cols="12" sm="6" md="4">
 						                <v-autocomplete v-model="editedMoveItem.room_id" label="Dipindah di" :items="autocompleteRoom"
@@ -229,13 +230,13 @@
 						        </v-row>
 						    </v-container>
 						</v-col>
-						<v-col cols="12" sm="12" md="3">
+						<v-col cols="12" sm="12" md="4">
 			        		<v-card flat>
 					          <v-card-text>
-					          	<v-list-item three-line v-for="move in assetDetail.moves" :key="move.id">
+					          	<v-list-item three-line v-for="move in editedMoveItem.moves" :key="move.id">
 						          	<v-list-item-content>
-								        <v-list-item-title>dipindah ke {{move.room_name}} oleh {{move.created_by}} pada tanggal {{move.move_date}} ({{move.move_description}})</v-list-item-title>
-								        <v-list-item-subtitle><span class="caption">dicatat oleh {{move.mover_name}} pada {{move.move_date}}</span></v-list-item-subtitle>
+								        <v-list-item-title>ke {{move.room_name}} oleh {{move.mover_name}} <span></span></v-list-item-title>
+								        <v-list-item-subtitle><span class="caption">tanggal {{move.move_at}} ({{move.move_description}}) dicatat oleh {{move.created_by}} pada {{move.created_at}}</span></v-list-item-subtitle>
 								    </v-list-item-content>
 					          	</v-list-item>
 					           </v-card-text>
@@ -327,6 +328,34 @@
 		      <v-tab-item value="tab-2">
 		        <v-card flat>
 		          <v-card-text>
+		          	<div v-if="assetDetail.receive">
+			          	<table class="mx-auto">
+			          		<tr>
+			          			<td>Pengirim</td><td>:</td><td>{{assetDetail.receive.receive_sender_identity}}</td>
+			          		</tr>
+			          		<tr>
+			          			<td>Tanggal Pengiriman</td><td>:</td><td>{{assetDetail.receive.receive_bill_date}}</td>
+			          		</tr>
+			          		<tr>
+			          			<td>Nomor Pengiriman</td><td>:</td><td>{{assetDetail.receive.receive_bill_number}}</td>
+			          		</tr>
+			          		<tr>
+			          			<td>Diterima tanggal</td><td>:</td><td>{{assetDetail.receive.receive_at}}</td>
+			          		</tr>
+			          		<tr>
+			          			<td>Oleh</td><td>:</td><td>{{assetDetail.receive.receiver_name}}</td>
+			          		</tr>
+			          		<tr>
+			          			<td>Didata oleh</td><td>:</td><td>{{assetDetail.receive.created_by}}</td>
+			          		</tr>
+			          		<tr>
+			          			<td>Pada tanggal</td><td>:</td><td>{{assetDetail.receive.created_at}}</td>
+			          		</tr>
+			          	</table>
+		          	</div>
+		          	<div v-else>
+		          		Tidak ada data penerimaan
+		          	</div>
 		          </v-card-text>
 		        </v-card>
 		      </v-tab-item>
@@ -335,8 +364,8 @@
 		          <v-card-text>
 		          	<v-list-item three-line v-for="move in assetDetail.moves" :key="move.id">
 			          	<v-list-item-content>
-					        <v-list-item-title>dipindah ke {{move.room_name}} oleh {{move.created_by}} pada tanggal {{move.move_date}} ({{move.move_description}})</v-list-item-title>
-					        <v-list-item-subtitle><span class="caption">dicatat oleh {{move.mover_name}} pada {{move.move_date}}</span></v-list-item-subtitle>
+					        <v-list-item-title>ke {{move.room_name}} oleh {{move.mover_name}}</v-list-item-title>
+								        <v-list-item-subtitle><span class="caption">tanggal {{move.move_at}} ({{move.move_description}}) dicatat oleh {{move.created_by}} pada {{move.created_at}}</span></v-list-item-subtitle>
 					    </v-list-item-content>
 		          	</v-list-item>
 		           </v-card-text>
@@ -397,7 +426,7 @@ export default{
 			//move data
 			moveModal: false,
 			editedMoveItem: {},
-			moveDateMenu: false,
+			//moveDateMenu: false,
 
 			//detail data
 			detailModal: false,
@@ -506,7 +535,10 @@ export default{
 	    //move item
 	    moveItem: function(item){
 	    	this.editedMoveItem = Object.assign({}, item);
-	    	this.moveModal = true;
+	    	axios.get(this.$store.state.apiUrl + 'move/show/' + item.id).then(response=>{
+	    		this.editedMoveItem.moves = response.data.moves;
+	    		this.moveModal = true;
+	    	});
 	    },
 	    closeMoveModal: function(){
 	    	this.editedMoveItem = {};

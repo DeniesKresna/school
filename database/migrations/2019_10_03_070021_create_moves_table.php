@@ -17,7 +17,7 @@ class CreateMovesTable extends Migration
             $table->bigIncrements('id');
             $table->integer('asset_id');
             $table->string('move_description',300)->nullable();
-            $table->date('move_date');
+            $table->datetime('move_at');
             $table->integer('room_id');
             $table->integer('mover_id');
             $table->integer('move_created_by');

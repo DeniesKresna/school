@@ -17,7 +17,7 @@ class CreateConditions extends Migration
             $table->bigIncrements('id');
             $table->integer('asset_id');
             $table->string('condition_description',300);
-            $table->date('condition_date');
+            $table->datetime('condition_at');
             $table->integer('conditiontype_id');
             $table->integer('condition_created_by');
             $table->integer('condition_updated_by');

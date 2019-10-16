@@ -22,7 +22,7 @@ class MoveController extends Controller
     	$move = new Move;
     	$move->asset_id = $req['id'];
     	$move->move_description = $req['move_description'];
-    	$move->move_date = $req['move_date'];
+    	$move->move_at = $req['move_at'];
     	$move->room_id = $req['room_id'];
     	$move->mover_id = $req['mover_id'];
     	$move->move_created_by = 1;
@@ -32,11 +32,14 @@ class MoveController extends Controller
     }
 
     public function show($asset_id){
-    	$moves = DB::table('moves as m')->join('assets as a','a.id','=','m.asset_id')
-    			->join('users as u','u.id','=','m.mover_id')
-    			->join('rooms as r','r.id','=','m.room_id')
-    			->where('m.asset_id',$asset_id)->orderBy('m.move_date')
-    			->select('m.*','u.name','r.room_name')->get();
-    	return response()->json(['message'=>"Berhasil ambil history perpindahan barang",'moves'=>$moves]);
+    	$moves = DB::table('moves as m')->join('users as u','u.id','=','m.mover_id')
+                ->join('users as cru','cru.id','=','m.move_created_by')
+                ->join('users as upu','upu.id','=','m.move_updated_by')
+                ->join('rooms as r','r.id','=','m.room_id')
+                ->join('users as mvr','mvr.id','=','m.mover_id')
+                ->select('m.*','cru.name as created_by','mvr.name as mover_name','r.room_name','upu.name as updated_by')
+                ->where('asset_id',$asset_id)->orderBy('m.move_at','desc')
+                ->get();
+        return response()->json(['message'=>"Berhasil ambil history perpindahan", 'moves'=>$moves]);
     }
 }

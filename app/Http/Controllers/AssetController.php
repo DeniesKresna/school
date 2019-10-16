@@ -142,7 +142,7 @@ class AssetController extends Controller
                 ->join('users as u','u.id','=','r.receiver_id')
                 ->join('users as cru','cru.id','=','r.receive_created_by')
                 ->join('users as upu','upu.id','=','r.receive_updated_by')
-                ->select('r.*','cru.name as created_by','upu.name as updated_by')->first();
+                ->select('r.*','u.name as receiver_name','cru.name as created_by','upu.name as updated_by')->first();
         $conditions = DB::table('conditions as c')
                 ->join('conditiontypes as ct','ct.id','=','c.conditiontype_id')
                 ->join('users as cru','cru.id','=','c.condition_created_by')
@@ -155,7 +155,7 @@ class AssetController extends Controller
                 ->join('rooms as r','r.id','=','m.room_id')
                 ->join('users as mvr','mvr.id','=','m.mover_id')
                 ->select('m.*','cru.name as created_by','mvr.name as mover_name','r.room_name','upu.name as updated_by')
-                ->where('asset_id',$id)->get();
+                ->where('asset_id',$id)->orderBy('m.move_at','desc')->get();
         $asset_detail = [
             'asset'=>$asset,
             'receive'=>$receive,
