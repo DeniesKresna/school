@@ -38,6 +38,7 @@ $router->get('/asset/detail/{id}','AssetController@detail');
 
 //======================Receive==========================
 $router->post('/receive/{asset_id}','ReceiveController@store');
+$router->get('/receive/show/{id}','ReceiveController@show');
 
 //======================User==========================
 $router->get('/user/autocomplete','UserController@autocomplete');

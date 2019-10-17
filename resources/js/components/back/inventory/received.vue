@@ -99,7 +99,7 @@
 							</v-row>
 							<v-row>
 								<v-col>
-				                  	<v-btn color="info" dark tile @click="addReceive"><v-icon>mdi-plus</v-icon> Add</v-btn>
+				                  	<v-btn color="info" dark tile @click="addReceive"><v-icon>mdi-plus</v-icon> {{saveModeText}}</v-btn>
 				                </v-col>
 				                  	<div class="flex-grow-1"></div>
 				                <v-col>
@@ -131,12 +131,28 @@ export default{
 			autocompleteConditiontype: [],
 			receiveDateMenu: false,
 			receiveBillDateMenu: false,
+			saveModeText: 'Tambah'
 		}
 	},
 	mounted(){
+		//console.log(this.$route.params.id);
+		if(typeof this.$route.params.id !== 'undefined'){
+			this.saveModeText = "Simpan"
+			this.getData(this.$route.params.id);
+		}
 		this.getAutocomplets();
 	},
 	methods:{
+		getData: function(asset_id = 1){
+			axios.get(this.$store.state.apiUrl + 'receive/show/' + asset_id).then(response=>{
+				if(!response.data.receive){
+					this.resetEditedItem;
+				}
+				else{
+					this.editedItem	= response.data.receive;
+				}
+			});
+		},
 		getAutocomplets: function(){
 			axios.get(this.$store.state.apiUrl + 'group/assettypeAutocomplete').then(response=>{
 				this.autocompleteData = response.data.autocompletes;

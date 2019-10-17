@@ -48,4 +48,14 @@ class ReceiveController extends Controller
 
     	return response()->json(['message'=>"Berhasil tambah penerimaan barang"]);
     }
+
+    public function show($id){
+        $receive = DB::table('receives as r')->where('asset_id',$id)
+                ->join('users as u','u.id','=','r.receiver_id')
+                ->join('users as cru','cru.id','=','r.receive_created_by')
+                ->join('users as upu','upu.id','=','r.receive_updated_by')
+                ->select('r.*','u.name as receiver_name','cru.name as created_by','upu.name as updated_by')
+                ->first();
+        return response()->json(['message'=>"Berhasil ambil penerimaan barang",'receive'=>$receive]);
+    }
 }

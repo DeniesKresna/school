@@ -287,7 +287,7 @@
 		    </v-tabs>
 
 		    <v-tabs-items v-model="detailTab">
-		      <v-tab-item value="tab-1">
+		      <v-tab-item value="tab-detail">
 		        <v-card flat>
 		          <v-card-text>
 		          	<table class="mx-auto">
@@ -379,6 +379,7 @@
 		    </v-tabs-items>
 		    <v-card-actions>
 			    <div class="flex-grow-1"></div>
+			    <v-btn color="green darken-1" text @click="editAssetDetail">Edit</v-btn>
 			    <v-btn color="blue darken-1" text @click="closeDetailModal">OK</v-btn>
 			</v-card-actions>
 		  </v-card>
@@ -563,6 +564,11 @@ export default{
 	    },
 	    closeDetailModal: function(){
 	    	this.detailModal = false;
+	    },
+	    editAssetDetail: function(){
+	    	if(this.detailTab == 'tab-2'){
+	    		this.$router.push('/back/inventory/received/' + this.assetDetail.asset.id);
+	    	}
 	    }
 	},
 	computed: {

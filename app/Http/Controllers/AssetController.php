@@ -138,7 +138,7 @@ class AssetController extends Controller
                 ->join('users as cru','cru.id','=','a.asset_created_by')
                 ->join('users as upu','upu.id','=','a.asset_updated_by')
                 ->select('a.*','at.assettype_name','at.assettype_unit','g.group_name','r.room_name','r.room_alias','cru.name as created_by','upu.name as updated_by')->where('a.id',$id)->first();
-        $receive = DB::table('receives as r')->where('asset_id',$id)
+        $receive = DB::table('receives as r')->where('r.asset_id',$id)
                 ->join('users as u','u.id','=','r.receiver_id')
                 ->join('users as cru','cru.id','=','r.receive_created_by')
                 ->join('users as upu','upu.id','=','r.receive_updated_by')
