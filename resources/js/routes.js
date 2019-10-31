@@ -9,14 +9,22 @@ let routes=[
   component: require('./components/back/inventory/table.vue').default
 },
 {
+  path: '/back/inventory/table/:group/:type',
+  component: require('./components/back/inventory/table.vue').default
+},
+{
   path: '/back/inventory/received',
   component: require('./components/back/inventory/received.vue').default
 },
 {
   path: '/back/inventory/received/:id',
   component: require('./components/back/inventory/received.vue').default
+},/*
+{
+  path: '/back/inventory/received/:id',
+  component: require('./components/back/inventory/received.vue').default
 }
-/*
+
 {
   path: '/home',
   name: 'dashboard',

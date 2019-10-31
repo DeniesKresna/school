@@ -451,6 +451,26 @@ export default{
 					this.autocompleteRoom = response.data.rooms;
 					axios.get(this.$store.state.apiUrl + 'user/autocomplete').then(response=>{
 						this.autocompleteUser = response.data.users;
+						if(typeof this.$route.params.group !== 'undefined' && typeof this.$route.params.type !== 'undefined'){
+							let pg = null;
+							if(this.autocompleteData.length > 0){
+								let picked_group_text = this.$route.params.group;
+								pg = this.autocompleteData.find((e)=>{
+									return e.text == picked_group_text.toUpperCase();
+								});
+								this.picked_group = pg.value;
+							}
+							this.setCategoriesSearch(this.picked_group);
+							if(this.picked_group > 0 && typeof pg.children !== 'undefined'){
+								let picked_category_text = this.$route.params.type;
+								let pc = pg.children.find((e)=>{
+									return e.text == picked_category_text.toUpperCase();
+								});
+								this.picked_category = pc.value;
+								this.show_search = true;
+								this.getAssets();
+							}
+						}
 					});
 				});
 			});
