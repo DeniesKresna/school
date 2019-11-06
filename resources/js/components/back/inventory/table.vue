@@ -265,7 +265,7 @@
 		    >
 		      <v-tabs-slider></v-tabs-slider>
 
-		      <v-tab href="#tab-1">
+		      <v-tab href="#tab-detail">
 		        Detail
 		        <v-icon>mdi-details</v-icon>
 		      </v-tab>
@@ -290,38 +290,42 @@
 		      <v-tab-item value="tab-detail">
 		        <v-card flat>
 		          <v-card-text>
-		          	<table class="mx-auto">
-		          		<tr>
-		          			<td>Nama</td><td>:</td><td>{{assetDetail.asset.asset_name}}</td>
-		          		</tr>
-		          		<tr>
-		          			<td>Merk</td><td>:</td><td>{{assetDetail.asset.asset_brand}}</td>
-		          		</tr>
-		          		<tr>
-		          			<td>Grup</td><td>:</td><td>{{assetDetail.asset.group_name}}</td>
-		          		</tr>
-		          		<tr>
-		          			<td>Tipe</td><td>:</td><td>{{assetDetail.asset.assettype_name}}</td>
-		          		</tr>
-		          		<tr>
-		          			<td>Satuan</td><td>:</td><td>{{assetDetail.asset.assettype_unit}}</td>
-		          		</tr>
-		          		<tr>
-		          			<td>Kode Inventaris</td><td>:</td><td>{{assetDetail.asset.asset_inventory_code}}</td>
-		          		</tr>
-		          		<tr>
-		          			<td>Keterangan</td><td>:</td><td>{{assetDetail.asset.asset_description}}</td>
-		          		</tr>
-		          		<tr>
-		          			<td>Ruang</td><td>:</td><td>{{assetDetail.asset.room_name}} ( {{assetDetail.asset.room_alias}} )</td>
-		          		</tr>
-		          		<tr>
-		          			<td>Didata oleh</td><td>:</td><td><strong>{{assetDetail.asset.created_by}}</strong> pada {{assetDetail.asset.created_at}}</td>
-		          		</tr>
-		          		<tr>
-		          			<td>Update data oleh</td><td>:</td><td><strong>{{assetDetail.asset.updated_by}}</strong> pada {{assetDetail.asset.updated_at}}</td>
-		          		</tr>
-		          	</table>
+		          	<v-container>
+			                <v-row>
+			                  <v-col cols="12" sm="6" md="4">
+			                    <v-text-field v-model="assetDetail.asset.asset_name" label="Nama" :readonly="readonly.asset"></v-text-field>
+			                  </v-col>
+			                  <v-col cols="12" sm="6" md="4">
+			                    <v-text-field v-model="assetDetail.asset.asset_brand" label="Merk" :readonly="readonly.asset"></v-text-field>
+			                  </v-col>
+			                  <v-col cols="12" sm="6" md="4">
+			                    <v-autocomplete v-model="assetDetail.asset.group_id" @change="setCategoriesEdit(editedItem.group_id)" label="Group" :items="autocompleteData" :readonly="readonly.asset"
+								    ></v-autocomplete>
+			                  </v-col>
+			                  <v-col cols="12" sm="6" md="4">
+			                    <v-autocomplete v-model="assetDetail.asset.assettype_id" label="Tipe" :items="editCategories" :readonly="readonly.asset"
+								    ></v-autocomplete>
+			                  </v-col>
+			                  <v-col cols="12" sm="6" md="4">
+			                    <v-autocomplete v-model="assetDetail.asset.room_id" label="Ruang" :items="autocompleteRoom" :readonly="readonly.asset"
+								    ></v-autocomplete>
+			                  </v-col>
+			                  <v-col cols="12" sm="6" md="4">
+			                    <v-text-field v-model="assetDetail.asset.asset_inventory_code" label="Kode Inventaris" :readonly="readonly.asset"></v-text-field>
+			                  </v-col>
+			                  <v-col cols="12" sm="6" md="4">
+			                    <v-text-field v-model="assetDetail.asset.asset_inventory_numb" label="No Inventaris" :readonly="readonly.asset"></v-text-field>
+			                  </v-col>
+			                  <v-col cols="12" sm="6" md="4">
+			                    <v-text-field v-model="assetDetail.asset.asset_serial_numb" label="Serial Number" :readonly="readonly.asset"></v-text-field>
+			                  </v-col>
+			                  <v-col cols="12" sm="6" md="4">
+			                  	<v-textarea label="Keterangan"
+						          v-model="assetDetail.asset.asset_description" :readonly="readonly.asset"
+						        ></v-textarea>
+			                  </v-col>
+			                </v-row>
+			              </v-container>
 		          </v-card-text>
 		        </v-card>
 		      </v-tab-item>
@@ -329,6 +333,92 @@
 		        <v-card flat>
 		          <v-card-text>
 		          	<div v-if="assetDetail.receive">
+		          		<v-container>
+							<v-row>
+				                <v-col cols="12" sm="6" md="4">
+				                    <v-autocomplete v-model="editedItem.room_id" label="Ruang" :items="autocompleteRoom"
+									    ></v-autocomplete>
+				                </v-col>
+				                <v-col cols="12" sm="6" md="4">
+				                    <v-text-field v-model="editedItem.asset_inventory_code" label="Kode Inventaris"></v-text-field>
+				                </v-col>
+				                <v-col cols="12" sm="6" md="4">
+				                    <v-text-field v-model="editedItem.asset_inventory_numb" label="No Inventaris"></v-text-field>
+				                </v-col>
+				                <v-col cols="12" sm="6" md="4">
+				                    <v-text-field v-model="editedItem.asset_serial_numb" label="Serial Number"></v-text-field>
+				                </v-col>
+				                <v-col cols="12" sm="6" md="4">
+							      <v-menu
+							        v-model="receiveBillDateMenu"
+							        :close-on-content-click="false"
+							        :nudge-right="40"
+							        transition="scale-transition"
+							        offset-y
+							        min-width="290px"
+							      >
+							        <template v-slot:activator="{ on }">
+							          <v-text-field
+							            v-model="editedItem.receive_bill_date"
+							            label="Tanggal Kirim"
+							            readonly
+							            v-on="on"
+							          ></v-text-field>
+							        </template>
+							        <v-date-picker v-model="editedItem.receive_bill_date" @input="receiveBillDateMenu = false"></v-date-picker>
+							      </v-menu>
+							    </v-col>
+				                <v-col cols="12" sm="6" md="4">
+				                	<v-datetime-picker label="Select Datetime" v-model="editedItem.receive_at"> </v-datetime-picker><!--
+							      <v-menu
+							        v-model="receiveDateMenu"
+							        :close-on-content-click="false"
+							        :nudge-right="40"
+							        transition="scale-transition"
+							        offset-y
+							        min-width="290px"
+							      >
+							        <template v-slot:activator="{ on }">
+							          <v-text-field
+							            v-model="editedItem.receive_at"
+							            label="Tanggal Terima"
+							            readonly
+							            v-on="on"
+							          ></v-text-field>
+							        </template>
+							        <v-date-picker v-model="editedItem.receive_at" @input="receiveDateMenu = false"></v-date-picker>
+							      </v-menu>-->
+							    </v-col>
+				                <v-col cols="12" sm="6" md="4">
+				                    <v-text-field v-model="editedItem.receive_bill_number" label="Nomor Pengiriman"></v-text-field>
+				                </v-col>
+				                <v-col cols="12" sm="6" md="4">
+				                    <v-text-field v-model="editedItem.receive_sender_identity" label="Pengirim"></v-text-field>
+				                </v-col>
+				                <v-col cols="12" sm="6" md="4">
+				                    <v-autocomplete v-model="editedItem.conditiontype_id" label="Kondisi" :items="autocompleteConditiontype"
+									    ></v-autocomplete>
+				                </v-col>
+				                <v-col cols="12" sm="6" md="4">
+				                    <v-autocomplete v-model="editedItem.receiver_id" label="Penerima" :items="autocompleteUser"
+									    ></v-autocomplete>
+				                </v-col>
+				                <v-col cols="12">
+				                  	<v-textarea label="Keterangan"
+							          v-model="editedItem.asset_description"
+							        ></v-textarea>
+				                </v-col>
+							</v-row>
+							<v-row>
+								<v-col>
+				                  	<v-btn color="info" dark tile @click="addReceive"><v-icon>mdi-plus</v-icon> {{saveModeText}}</v-btn>
+				                </v-col>
+				                  	<div class="flex-grow-1"></div>
+				                <v-col>
+				                  	<v-btn color="primary" text dark tile @click="resetEditedItem"><v-icon>mdi-flask-empty-outline</v-icon> Reset</v-btn>
+				                </v-col>
+							</v-row>
+						</v-container>
 			          	<table class="mx-auto">
 			          		<tr>
 			          			<td>Pengirim</td><td>:</td><td>{{assetDetail.receive.receive_sender_identity}}</td>
@@ -379,8 +469,9 @@
 		    </v-tabs-items>
 		    <v-card-actions>
 			    <div class="flex-grow-1"></div>
-			    <v-btn color="green darken-1" text @click="editAssetDetail">Edit</v-btn>
-			    <v-btn color="blue darken-1" text @click="closeDetailModal">OK</v-btn>
+			    <v-btn color="green darken-3" text @click="saveAssetDetail" v-if="editMode">Save</v-btn>
+			    <v-btn color="green darken-1" text @click="editAssetDetail" v-else>Edit</v-btn>
+			    <v-btn color="blue darken-1" text @click="closeAssetDetail">OK</v-btn>
 			</v-card-actions>
 		  </v-card>
 	</v-dialog>
@@ -437,7 +528,11 @@ export default{
 				receive: {},
 				conditions: [],
 				moves: []
-			}
+			},
+			readonly: {
+				asset: true
+			},
+			editMode: false
 		}
 	},
 	mounted(){
@@ -582,13 +677,33 @@ export default{
 	    		this.detailModal = true;
 	    	});
 	    },
-	    closeDetailModal: function(){
-	    	this.detailModal = false;
-	    },
 	    editAssetDetail: function(){
-	    	if(this.detailTab == 'tab-2'){
-	    		this.$router.push('/back/inventory/received/' + this.assetDetail.asset.id);
+	    	this.readonly = {
+	    		asset: false,
+				receive: false,
+				conditions: false,
+				moves: false
 	    	}
+	    	this.editMode = true;
+	    },
+	    saveAssetDetail: function(){
+	  		axios.patch(this.$store.state.apiUrl + 'asset/detail/' + this.assetDetail.asset.id, {
+	  			editedItem: this.assetDetail
+	  		}).then(response=>{
+	  			this.$swal("Good job!", response.data.message, "success");
+	    		this.getAssets();
+				this.closeAssetDetail();
+	  		});
+	    },
+	    closeAssetDetail: function(){
+	    	this.readonly = {
+	    		asset: true,
+				receive: true,
+				conditions: true,
+				moves: true
+	    	}
+	    	this.editMode = false;
+	    	this.detailModal = false;
 	    }
 	},
 	computed: {
@@ -598,6 +713,13 @@ export default{
 			}
 			else{
 				return "Tambah Asset Baru";
+			}
+		}
+	},
+	watch: {
+		detailModal(val){
+			if(val == false){
+				this.closeAssetDetail();
 			}
 		}
 	}

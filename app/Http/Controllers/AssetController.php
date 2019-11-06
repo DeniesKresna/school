@@ -104,9 +104,9 @@ class AssetController extends Controller
         return response()->json(['assets'=>$assets]);
     }
 
-    public function update(Request $request, $id){
+    public function updateAll(Request $request, $id){
         $asset = Asset::findOrFail($id);
-        $asset->fill($request->editedItem);
+        $asset->fill($request->editedItem["asset"]);
         $asset->asset_updated_by = 1;
         $asset->save();
         return response()->json(['message'=>"Berhasil update asset"]);
@@ -137,7 +137,7 @@ class AssetController extends Controller
                 ->join('groups as g','g.id','=','at.group_id')->join('rooms as r','r.id','=','a.room_id')
                 ->join('users as cru','cru.id','=','a.asset_created_by')
                 ->join('users as upu','upu.id','=','a.asset_updated_by')
-                ->select('a.*','at.assettype_name','at.assettype_unit','g.group_name','r.room_name','r.room_alias','cru.name as created_by','upu.name as updated_by')->where('a.id',$id)->first();
+                ->select('a.*','at.assettype_name','at.assettype_unit','g.group_name','at.group_id','r.room_name','r.room_alias','cru.name as created_by','upu.name as updated_by')->where('a.id',$id)->first();
         $receive = DB::table('receives as r')->where('r.asset_id',$id)
                 ->join('users as u','u.id','=','r.receiver_id')
                 ->join('users as cru','cru.id','=','r.receive_created_by')

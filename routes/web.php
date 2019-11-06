@@ -31,10 +31,10 @@ $router->get('/room/autocomplete', 'RoomController@autocomplete');
 //======================Asset==========================
 $router->post('/asset/filter', 'AssetController@filter');
 $router->post('/asset/import', 'AssetController@import');
-$router->patch('/asset/{id}', 'AssetController@update');
 $router->post('/asset', 'AssetController@store');
 $router->delete('/asset/{id}','AssetController@delete');
 $router->get('/asset/detail/{id}','AssetController@detail');
+$router->patch('/asset/detail/{id}','AssetController@updateAll');
 
 //======================Receive==========================
 $router->post('/receive/{asset_id}','ReceiveController@store');
