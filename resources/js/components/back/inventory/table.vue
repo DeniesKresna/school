@@ -332,21 +332,21 @@
 		      <v-tab-item value="tab-2">
 		        <v-card flat>
 		          <v-card-text>
-		          	<div v-if="assetDetail.receive">
+		          	<div>
 		          		<v-container>
 							<v-row>
 				                <v-col cols="12" sm="6" md="4">
-				                    <v-autocomplete v-model="editedItem.room_id" label="Ruang" :items="autocompleteRoom"
+				                    <v-autocomplete v-model="assetDetail.receive.room_id" label="Ruang" :items="autocompleteRoom" :readonly="readonly.receive"
 									    ></v-autocomplete>
 				                </v-col>
 				                <v-col cols="12" sm="6" md="4">
-				                    <v-text-field v-model="editedItem.asset_inventory_code" label="Kode Inventaris"></v-text-field>
+				                    <v-text-field v-model="assetDetail.receive.asset_inventory_code" label="Kode Inventaris" :readonly="readonly.receive"></v-text-field>
 				                </v-col>
 				                <v-col cols="12" sm="6" md="4">
-				                    <v-text-field v-model="editedItem.asset_inventory_numb" label="No Inventaris"></v-text-field>
+				                    <v-text-field v-model="assetDetail.receive.asset_inventory_numb" label="No Inventaris" :readonly="readonly.receive"></v-text-field>
 				                </v-col>
 				                <v-col cols="12" sm="6" md="4">
-				                    <v-text-field v-model="editedItem.asset_serial_numb" label="Serial Number"></v-text-field>
+				                    <v-text-field v-model="assetDetail.receive.asset_serial_numb" label="Serial Number" :readonly="readonly.receive"></v-text-field>
 				                </v-col>
 				                <v-col cols="12" sm="6" md="4">
 							      <v-menu
@@ -359,63 +359,36 @@
 							      >
 							        <template v-slot:activator="{ on }">
 							          <v-text-field
-							            v-model="editedItem.receive_bill_date"
+							            v-model="assetDetail.receive.receive_bill_date"
 							            label="Tanggal Kirim"
 							            readonly
 							            v-on="on"
 							          ></v-text-field>
 							        </template>
-							        <v-date-picker v-model="editedItem.receive_bill_date" @input="receiveBillDateMenu = false"></v-date-picker>
+							        <v-date-picker v-model="assetDetail.receive.receive_bill_date" @input="receiveBillDateMenu = false"></v-date-picker>
 							      </v-menu>
 							    </v-col>
 				                <v-col cols="12" sm="6" md="4">
-				                	<v-datetime-picker label="Select Datetime" v-model="editedItem.receive_at"> </v-datetime-picker><!--
-							      <v-menu
-							        v-model="receiveDateMenu"
-							        :close-on-content-click="false"
-							        :nudge-right="40"
-							        transition="scale-transition"
-							        offset-y
-							        min-width="290px"
-							      >
-							        <template v-slot:activator="{ on }">
-							          <v-text-field
-							            v-model="editedItem.receive_at"
-							            label="Tanggal Terima"
-							            readonly
-							            v-on="on"
-							          ></v-text-field>
-							        </template>
-							        <v-date-picker v-model="editedItem.receive_at" @input="receiveDateMenu = false"></v-date-picker>
-							      </v-menu>-->
+				                	<v-datetime-picker label="Select Datetime" v-model="assetDetail.receive.receive_at"> </v-datetime-picker>
 							    </v-col>
 				                <v-col cols="12" sm="6" md="4">
-				                    <v-text-field v-model="editedItem.receive_bill_number" label="Nomor Pengiriman"></v-text-field>
+				                    <v-text-field v-model="assetDetail.receive.receive_bill_number" label="Nomor Pengiriman"></v-text-field>
 				                </v-col>
 				                <v-col cols="12" sm="6" md="4">
-				                    <v-text-field v-model="editedItem.receive_sender_identity" label="Pengirim"></v-text-field>
+				                    <v-text-field v-model="assetDetail.receive.receive_sender_identity" label="Pengirim"></v-text-field>
 				                </v-col>
 				                <v-col cols="12" sm="6" md="4">
-				                    <v-autocomplete v-model="editedItem.conditiontype_id" label="Kondisi" :items="autocompleteConditiontype"
+				                    <v-autocomplete v-model="assetDetail.receive.conditiontype_id" label="Kondisi" :items="autocompleteCondition"
 									    ></v-autocomplete>
 				                </v-col>
 				                <v-col cols="12" sm="6" md="4">
-				                    <v-autocomplete v-model="editedItem.receiver_id" label="Penerima" :items="autocompleteUser"
+				                    <v-autocomplete v-model="assetDetail.receive.receiver_id" label="Penerima" :items="autocompleteUser"
 									    ></v-autocomplete>
 				                </v-col>
 				                <v-col cols="12">
 				                  	<v-textarea label="Keterangan"
-							          v-model="editedItem.asset_description"
+							          v-model="assetDetail.receive.asset_description"
 							        ></v-textarea>
-				                </v-col>
-							</v-row>
-							<v-row>
-								<v-col>
-				                  	<v-btn color="info" dark tile @click="addReceive"><v-icon>mdi-plus</v-icon> {{saveModeText}}</v-btn>
-				                </v-col>
-				                  	<div class="flex-grow-1"></div>
-				                <v-col>
-				                  	<v-btn color="primary" text dark tile @click="resetEditedItem"><v-icon>mdi-flask-empty-outline</v-icon> Reset</v-btn>
 				                </v-col>
 							</v-row>
 						</v-container>
@@ -442,9 +415,6 @@
 			          			<td>Pada tanggal</td><td>:</td><td>{{assetDetail.receive.created_at}}</td>
 			          		</tr>
 			          	</table>
-		          	</div>
-		          	<div v-else>
-		          		Tidak ada data penerimaan
 		          	</div>
 		          </v-card-text>
 		        </v-card>
@@ -492,6 +462,9 @@ export default{
 			autocompleteRoom: [
 				{value:"0", text:"Belum ada data"}
 			],
+			autocompleteCondition: [
+				{value:"0", text:"Belum ada data"}
+			],
 			autocompleteUser: [],
 			search: '',
 			picked_group: 0,
@@ -518,6 +491,7 @@ export default{
 			//move data
 			moveModal: false,
 			editedMoveItem: {},
+			receiveBillDateMenu: false,
 			//moveDateMenu: false,
 
 			//detail data
@@ -530,7 +504,8 @@ export default{
 				moves: []
 			},
 			readonly: {
-				asset: true
+				asset: true,
+				receive: true
 			},
 			editMode: false
 		}
@@ -546,26 +521,29 @@ export default{
 					this.autocompleteRoom = response.data.rooms;
 					axios.get(this.$store.state.apiUrl + 'user/autocomplete').then(response=>{
 						this.autocompleteUser = response.data.users;
-						if(typeof this.$route.params.group !== 'undefined' && typeof this.$route.params.type !== 'undefined'){
-							let pg = null;
-							if(this.autocompleteData.length > 0){
-								let picked_group_text = this.$route.params.group;
-								pg = this.autocompleteData.find((e)=>{
-									return e.text == picked_group_text.toUpperCase();
-								});
-								this.picked_group = pg.value;
+						axios.get(this.$store.state.apiUrl + 'conditiontype/autocomplete').then(response=>{
+							this.autocompleteCondition = response.data.conditiontypes;
+							if(typeof this.$route.params.group !== 'undefined' && typeof this.$route.params.type !== 'undefined'){
+								let pg = null;
+								if(this.autocompleteData.length > 0){
+									let picked_group_text = this.$route.params.group;
+									pg = this.autocompleteData.find((e)=>{
+										return e.text == picked_group_text.toUpperCase();
+									});
+									this.picked_group = pg.value;
+								}
+								this.setCategoriesSearch(this.picked_group);
+								if(this.picked_group > 0 && typeof pg.children !== 'undefined'){
+									let picked_category_text = this.$route.params.type;
+									let pc = pg.children.find((e)=>{
+										return e.text == picked_category_text.toUpperCase();
+									});
+									this.picked_category = pc.value;
+									this.show_search = true;
+									this.getAssets();
+								}
 							}
-							this.setCategoriesSearch(this.picked_group);
-							if(this.picked_group > 0 && typeof pg.children !== 'undefined'){
-								let picked_category_text = this.$route.params.type;
-								let pc = pg.children.find((e)=>{
-									return e.text == picked_category_text.toUpperCase();
-								});
-								this.picked_category = pc.value;
-								this.show_search = true;
-								this.getAssets();
-							}
-						}
+						});
 					});
 				});
 			});
