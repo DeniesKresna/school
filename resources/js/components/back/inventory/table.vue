@@ -270,7 +270,7 @@
 		        <v-icon>mdi-details</v-icon>
 		      </v-tab>
 
-			  <v-tab href="#tab-2">
+			  <v-tab href="#tab-receive">
 		        Penerimaan
 		        <v-icon>mdi-hand-left</v-icon>
 		      </v-tab>
@@ -329,7 +329,7 @@
 		          </v-card-text>
 		        </v-card>
 		      </v-tab-item>
-		      <v-tab-item value="tab-2">
+		      <v-tab-item value="tab-receive">
 		        <v-card flat>
 		          <v-card-text>
 		          	<div>
@@ -365,56 +365,33 @@
 							            v-on="on"
 							          ></v-text-field>
 							        </template>
-							        <v-date-picker v-model="assetDetail.receive.receive_bill_date" @input="receiveBillDateMenu = false"></v-date-picker>
+							        <v-date-picker v-model="assetDetail.receive.receive_bill_date" @input="receiveBillDateMenu = false" :readonly="readonly.receive"></v-date-picker>
 							      </v-menu>
 							    </v-col>
 				                <v-col cols="12" sm="6" md="4">
-				                	<v-datetime-picker label="Select Datetime" v-model="assetDetail.receive.receive_at"> </v-datetime-picker>
+				                	<v-datetime-picker label="Tanggal Terima" v-model="assetDetail.receive.receive_at" :disabled="readonly.receive" timeFormat="HH:mm:ss"> </v-datetime-picker>
 							    </v-col>
 				                <v-col cols="12" sm="6" md="4">
-				                    <v-text-field v-model="assetDetail.receive.receive_bill_number" label="Nomor Pengiriman"></v-text-field>
+				                    <v-text-field v-model="assetDetail.receive.receive_bill_number" label="Nomor Pengiriman" :readonly="readonly.receive"></v-text-field>
 				                </v-col>
 				                <v-col cols="12" sm="6" md="4">
-				                    <v-text-field v-model="assetDetail.receive.receive_sender_identity" label="Pengirim"></v-text-field>
+				                    <v-text-field v-model="assetDetail.receive.receive_sender_identity" label="Pengirim" :readonly="readonly.receive"></v-text-field>
 				                </v-col>
 				                <v-col cols="12" sm="6" md="4">
-				                    <v-autocomplete v-model="assetDetail.receive.conditiontype_id" label="Kondisi" :items="autocompleteCondition"
+				                    <v-autocomplete v-model="assetDetail.receive.conditiontype_id" label="Kondisi" :items="autocompleteCondition" :readonly="readonly.receive"
 									    ></v-autocomplete>
 				                </v-col>
 				                <v-col cols="12" sm="6" md="4">
-				                    <v-autocomplete v-model="assetDetail.receive.receiver_id" label="Penerima" :items="autocompleteUser"
+				                    <v-autocomplete v-model="assetDetail.receive.receiver_id" label="Penerima" :items="autocompleteUser" :readonly="readonly.receive"
 									    ></v-autocomplete>
 				                </v-col>
 				                <v-col cols="12">
 				                  	<v-textarea label="Keterangan"
-							          v-model="assetDetail.receive.asset_description"
+							          v-model="assetDetail.receive.asset_description" :readonly="readonly.receive"
 							        ></v-textarea>
 				                </v-col>
 							</v-row>
 						</v-container>
-			          	<table class="mx-auto">
-			          		<tr>
-			          			<td>Pengirim</td><td>:</td><td>{{assetDetail.receive.receive_sender_identity}}</td>
-			          		</tr>
-			          		<tr>
-			          			<td>Tanggal Pengiriman</td><td>:</td><td>{{assetDetail.receive.receive_bill_date}}</td>
-			          		</tr>
-			          		<tr>
-			          			<td>Nomor Pengiriman</td><td>:</td><td>{{assetDetail.receive.receive_bill_number}}</td>
-			          		</tr>
-			          		<tr>
-			          			<td>Diterima tanggal</td><td>:</td><td>{{assetDetail.receive.receive_at}}</td>
-			          		</tr>
-			          		<tr>
-			          			<td>Oleh</td><td>:</td><td>{{assetDetail.receive.receiver_name}}</td>
-			          		</tr>
-			          		<tr>
-			          			<td>Didata oleh</td><td>:</td><td>{{assetDetail.receive.created_by}}</td>
-			          		</tr>
-			          		<tr>
-			          			<td>Pada tanggal</td><td>:</td><td>{{assetDetail.receive.created_at}}</td>
-			          		</tr>
-			          	</table>
 		          	</div>
 		          </v-card-text>
 		        </v-card>
@@ -428,7 +405,7 @@
 								        <v-list-item-subtitle><span class="caption">tanggal {{move.move_at}} ({{move.move_description}}) dicatat oleh {{move.created_by}} pada {{move.created_at}}</span></v-list-item-subtitle>
 					    </v-list-item-content>
 		          	</v-list-item>
-		           </v-card-text>
+		          </v-card-text>
 		        </v-card>
 		      </v-tab-item>
 		      <v-tab-item value="tab-4">

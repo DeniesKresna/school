@@ -124,6 +124,13 @@ class AssetController extends Controller
         $asset->fill($request->editedItem["asset"]);
         $asset->asset_updated_by = 1;
         $asset->save();
+
+        //receive
+        $receive = Receive::where('asset_id',$id)->first();
+        $receive->fill($request->editedItem["receive"]);
+        $receive->receive_updated_by = 1;
+        $receive->save();
+
         return response()->json(['message'=>"Berhasil update asset"]);
     }
 
@@ -137,6 +144,18 @@ class AssetController extends Controller
         $asset->asset_updated_by = 1;
         $asset->asset_created_by = 1;
         $asset->save();
+
+        $receive = Receive::where('asset_id',$asset->id)->first();
+        $receive = new Receive;
+        $receive->receive_at = date('Y-m-d H:i:s');
+        $receive->asset_id = $asset->id;
+        $receive->receive_sender_identity = 'Hasil Importan';
+        $receive->receive_bill_date = date('Y-m-d');
+        $receive->receive_bill_number = 'Hasil Importan';
+        $receive->receiver_id = 1;
+        $receive->receive_created_by = 1;
+        $receive->receive_updated_by = 1;
+        $receive->save();
         return response()->json(['message'=>"Berhasil tambah asset", 'asset_id'=>$asset->id]);
     }
 
