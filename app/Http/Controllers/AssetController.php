@@ -98,6 +98,18 @@ class AssetController extends Controller
                 $receive->receive_created_by = 1;
                 $receive->receive_updated_by = 1;
                 $receive->save();
+
+                DB::table('moves')->insert([
+                    'asset_id'=>$asset->id,
+                    'move_description'=>'Hasil Importan',
+                    'move_at'=>date("Y-m-d H:i:s"),
+                    'room_id'=>$room_id,
+                    'mover_id'=>1,
+                    'move_created_by'=>1,
+                    'move_updated_by'=>1,
+                    'created_at'=>date("Y-m-d H:i:s"),
+                    'updated_at'=>date("Y-m-d H:i:s")
+                ]);
         	}
             return response()->json(['message'=>'Berhasil Import Data']);
         }
@@ -149,13 +161,26 @@ class AssetController extends Controller
         $receive = new Receive;
         $receive->receive_at = date('Y-m-d H:i:s');
         $receive->asset_id = $asset->id;
-        $receive->receive_sender_identity = 'Hasil Importan';
+        $receive->receive_sender_identity = 'Input Baru';
         $receive->receive_bill_date = date('Y-m-d');
-        $receive->receive_bill_number = 'Hasil Importan';
+        $receive->receive_bill_number = 'Input Baru';
         $receive->receiver_id = 1;
         $receive->receive_created_by = 1;
         $receive->receive_updated_by = 1;
         $receive->save();
+
+        DB::table('moves')->insert([
+                    'asset_id'=>$asset->id,
+                    'move_description'=>'Input Baru',
+                    'move_at'=>date("Y-m-d H:i:s"),
+                    'room_id'=>$room_id,
+                    'mover_id'=>1,
+                    'move_created_by'=>1,
+                    'move_updated_by'=>1,
+                    'created_at'=>date("Y-m-d H:i:s"),
+                    'updated_at'=>date("Y-m-d H:i:s")
+                ]);
+
         return response()->json(['message'=>"Berhasil tambah asset", 'asset_id'=>$asset->id]);
     }
 

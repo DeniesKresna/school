@@ -336,19 +336,6 @@
 		          		<v-container>
 							<v-row>
 				                <v-col cols="12" sm="6" md="4">
-				                    <v-autocomplete v-model="assetDetail.receive.room_id" label="Ruang" :items="autocompleteRoom" :readonly="readonly.receive"
-									    ></v-autocomplete>
-				                </v-col>
-				                <v-col cols="12" sm="6" md="4">
-				                    <v-text-field v-model="assetDetail.receive.asset_inventory_code" label="Kode Inventaris" :readonly="readonly.receive"></v-text-field>
-				                </v-col>
-				                <v-col cols="12" sm="6" md="4">
-				                    <v-text-field v-model="assetDetail.receive.asset_inventory_numb" label="No Inventaris" :readonly="readonly.receive"></v-text-field>
-				                </v-col>
-				                <v-col cols="12" sm="6" md="4">
-				                    <v-text-field v-model="assetDetail.receive.asset_serial_numb" label="Serial Number" :readonly="readonly.receive"></v-text-field>
-				                </v-col>
-				                <v-col cols="12" sm="6" md="4">
 							      <v-menu
 							        v-model="receiveBillDateMenu"
 							        :close-on-content-click="false"
@@ -385,7 +372,7 @@
 				                    <v-autocomplete v-model="assetDetail.receive.receiver_id" label="Penerima" :items="autocompleteUser" :readonly="readonly.receive"
 									    ></v-autocomplete>
 				                </v-col>
-				                <v-col cols="12">
+				                <v-col cols="12" sm="6" md="4">
 				                  	<v-textarea label="Keterangan"
 							          v-model="assetDetail.receive.asset_description" :readonly="readonly.receive"
 							        ></v-textarea>
@@ -399,12 +386,42 @@
 		      <v-tab-item value="tab-3">
 		        <v-card flat>
 		          <v-card-text>
-		          	<v-list-item three-line v-for="move in assetDetail.moves" :key="move.id">
-			          	<v-list-item-content>
-					        <v-list-item-title>ke {{move.room_name}} oleh {{move.mover_name}}</v-list-item-title>
-								        <v-list-item-subtitle><span class="caption">tanggal {{move.move_at}} ({{move.move_description}}) dicatat oleh {{move.created_by}} pada {{move.created_at}}</span></v-list-item-subtitle>
-					    </v-list-item-content>
-		          	</v-list-item>
+		          	<v-container>
+		          		<v-row>
+		          			<v-col cols="12" sm="4" md="3">
+		          				<v-container>
+		          					<v-row>
+		          						<v-col>
+		          							<v-text-field v-model="assetDetail.move.move_at" label="Pemindah" :readonly="readonly.move"></v-text-field>
+		          						</v-col>
+		          						<v-col>
+						                    <v-autocomplete v-model="assetDetail.move.room_id" label="Ruang" :items="autocompleteRoom" :readonly="readonly.move"
+											    ></v-autocomplete>
+						                </v-col>
+		          						<v-col>
+						                    <v-autocomplete v-model="assetDetail.move.mover_id" label="Pemindah" :items="autocompleteRoom" :readonly="readonly.move"
+											    ></v-autocomplete>
+						                </v-col>
+		          						<v-col>
+						                    <v-textarea label="Keterangan" v-model="assetDetail.move.move_description" :readonly="readonly.move"
+									        ></v-textarea>
+						                </v-col>
+						                <v-col>
+						                	<v-btn color="green darken-1" text @click="importAsset" v-if="assetFile">Import</v-btn>
+						                </v-col>
+		          					</v-row>
+		          				</v-container>
+		          			</v-col>
+		          			<v-col cols="12" sm="8" md="9">
+		          				<v-list-item three-line v-for="move in assetDetail.moves" :key="move.id">
+						          	<v-list-item-content>
+								        <v-list-item-title>ke {{move.room_name}} oleh {{move.mover_name}}</v-list-item-title>
+											        <v-list-item-subtitle><span class="caption">tanggal {{move.move_at}} ({{move.move_description}}) dicatat oleh {{move.created_by}} pada {{move.created_at}}</span></v-list-item-subtitle>
+								    </v-list-item-content>
+					          	</v-list-item>
+		          			</v-col>
+		          		</v-row>
+		          	</v-container>
 		          </v-card-text>
 		        </v-card>
 		      </v-tab-item>
@@ -482,7 +499,8 @@ export default{
 			},
 			readonly: {
 				asset: true,
-				receive: true
+				receive: true,
+				move: true
 			},
 			editMode: false
 		}
@@ -637,7 +655,7 @@ export default{
 	    		asset: false,
 				receive: false,
 				conditions: false,
-				moves: false
+				move: false
 	    	}
 	    	this.editMode = true;
 	    },
@@ -655,7 +673,7 @@ export default{
 	    		asset: true,
 				receive: true,
 				conditions: true,
-				moves: true
+				move: true
 	    	}
 	    	this.editMode = false;
 	    	this.detailModal = false;

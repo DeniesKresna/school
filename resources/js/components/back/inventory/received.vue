@@ -57,25 +57,7 @@
 							      </v-menu>
 							    </v-col>
 				                <v-col cols="12" sm="6" md="4">
-				                	<v-datetime-picker label="Select Datetime" v-model="editedItem.receive_at"> </v-datetime-picker><!--
-							      <v-menu
-							        v-model="receiveDateMenu"
-							        :close-on-content-click="false"
-							        :nudge-right="40"
-							        transition="scale-transition"
-							        offset-y
-							        min-width="290px"
-							      >
-							        <template v-slot:activator="{ on }">
-							          <v-text-field
-							            v-model="editedItem.receive_at"
-							            label="Tanggal Terima"
-							            readonly
-							            v-on="on"
-							          ></v-text-field>
-							        </template>
-							        <v-date-picker v-model="editedItem.receive_at" @input="receiveDateMenu = false"></v-date-picker>
-							      </v-menu>-->
+				                	<v-datetime-picker label="Select Datetime" v-model="editedItem.receive_at"> </v-datetime-picker>
 							    </v-col>
 				                <v-col cols="12" sm="6" md="4">
 				                    <v-text-field v-model="editedItem.receive_bill_number" label="Nomor Pengiriman"></v-text-field>
