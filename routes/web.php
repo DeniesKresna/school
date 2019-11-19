@@ -47,5 +47,5 @@ $router->get('/user/autocomplete','UserController@autocomplete');
 $router->get('/conditiontype/autocomplete','ConditiontypeController@autocomplete');
 
 //======================Move==========================
-$router->post('/move','MoveController@store');
+$router->post('/move/{asset_id}','MoveController@store');
 $router->get('/move/show/{asset_id}','MoveController@show');

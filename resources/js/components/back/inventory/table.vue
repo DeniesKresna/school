@@ -388,31 +388,31 @@
 		          <v-card-text>
 		          	<v-container>
 		          		<v-row>
-		          			<v-col cols="12" sm="4" md="3">
+		          			<v-col cols="12">
 		          				<v-container>
 		          					<v-row>
 		          						<v-col>
-		          							<v-text-field v-model="assetDetail.move.move_at" label="Pemindah" :readonly="readonly.move"></v-text-field>
+		          							<v-datetime-picker label="Tanggal Pindah" v-model="move.move_at" :disabled="readonly.move" timeFormat="HH:mm:ss"> </v-datetime-picker>
 		          						</v-col>
 		          						<v-col>
-						                    <v-autocomplete v-model="assetDetail.move.room_id" label="Ruang" :items="autocompleteRoom" :readonly="readonly.move"
+						                    <v-autocomplete v-model="move.room_id" label="Ruang" :items="autocompleteRoom" :readonly="readonly.move"
 											    ></v-autocomplete>
 						                </v-col>
 		          						<v-col>
-						                    <v-autocomplete v-model="assetDetail.move.mover_id" label="Pemindah" :items="autocompleteRoom" :readonly="readonly.move"
+						                    <v-autocomplete v-model="move.mover_id" label="Pemindah" :items="autocompleteRoom" :readonly="readonly.move"
 											    ></v-autocomplete>
 						                </v-col>
 		          						<v-col>
-						                    <v-textarea label="Keterangan" v-model="assetDetail.move.move_description" :readonly="readonly.move"
-									        ></v-textarea>
+						                    <v-text-field label="Keterangan" v-model="move.move_description" :readonly="readonly.move"
+									        ></v-text-field>
 						                </v-col>
 						                <v-col>
-						                	<v-btn color="green darken-1" text @click="importAsset" v-if="assetFile">Import</v-btn>
+						                	<v-btn color="green darken-1" text @click="moveAsset" v-if="noNullMoveInput">Pindah Asset</v-btn>
 						                </v-col>
 		          					</v-row>
 		          				</v-container>
 		          			</v-col>
-		          			<v-col cols="12" sm="8" md="9">
+		          			<v-col>
 		          				<v-list-item three-line v-for="move in assetDetail.moves" :key="move.id">
 						          	<v-list-item-content>
 								        <v-list-item-title>ke {{move.room_name}} oleh {{move.mover_name}}</v-list-item-title>
@@ -486,6 +486,7 @@ export default{
 			moveModal: false,
 			editedMoveItem: {},
 			receiveBillDateMenu: false,
+			move: {},
 			//moveDateMenu: false,
 
 			//detail data
@@ -634,12 +635,11 @@ export default{
 	    	this.moveModal = false;
 	    },
 	    saveAssetMove: function(){
-	    	axios.post(this.$store.state.apiUrl + 'move',{
-	    		editedItem: this.editedMoveItem	
+	    	axios.post(this.$store.state.apiUrl + 'move/' + this.assetDetail.asset.id,{
+	    		editedItem: this.move	
 	    	}).then(response=>{
 	    		this.$swal("Good job!", response.data.message, "success");
-	    		this.getAssets();
-				this.closeMoveModal();
+	    		this.detailItem(this.assetDetail.asset);
 	    	});
 	    },
 
@@ -686,6 +686,15 @@ export default{
 			}
 			else{
 				return "Tambah Asset Baru";
+			}
+		},
+		noNullMoveInput: function(){
+			for(prop in this.move){
+				if(typeof this.move[prop] == 'null' || this.move[prop] == ''){
+					return false;
+				}
+				else
+					return true;
 			}
 		}
 	},

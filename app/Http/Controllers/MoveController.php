@@ -10,9 +10,9 @@ use App\Asset;
 class MoveController extends Controller
 {
     //
-    public function store(Request $request){
+    public function store(Request $request, $asset_id){
         $req = $request->editedItem;
-    	$asset = Asset::findOrFail($req['id']);
+    	$asset = Asset::findOrFail($asset_id);
     	if(!$asset)
     		return response()->json(['message'=>'Tidak ditemukan asset dengan serial number tersebut'], 422);
 
@@ -20,7 +20,7 @@ class MoveController extends Controller
     	$asset->save();
 
     	$move = new Move;
-    	$move->asset_id = $req['id'];
+    	$move->asset_id = $asset_id;
     	$move->move_description = $req['move_description'];
     	$move->move_at = $req['move_at'];
     	$move->room_id = $req['room_id'];
