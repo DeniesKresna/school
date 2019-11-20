@@ -399,7 +399,7 @@
 											    ></v-autocomplete>
 						                </v-col>
 		          						<v-col>
-						                    <v-autocomplete v-model="move.mover_id" label="Pemindah" :items="autocompleteRoom" :readonly="readonly.move"
+						                    <v-autocomplete v-model="move.mover_id" label="Pemindah" :items="autocompleteUser" :readonly="readonly.move"
 											    ></v-autocomplete>
 						                </v-col>
 		          						<v-col>
@@ -412,13 +412,18 @@
 		          					</v-row>
 		          				</v-container>
 		          			</v-col>
-		          			<v-col>
-		          				<v-list-item three-line v-for="move in assetDetail.moves" :key="move.id">
-						          	<v-list-item-content>
-								        <v-list-item-title>ke {{move.room_name}} oleh {{move.mover_name}}</v-list-item-title>
-											        <v-list-item-subtitle><span class="caption">tanggal {{move.move_at}} ({{move.move_description}}) dicatat oleh {{move.created_by}} pada {{move.created_at}}</span></v-list-item-subtitle>
-								    </v-list-item-content>
-					          	</v-list-item>
+		          			<v-col cols="12">
+		          				<v-list :three-line="false">
+			          				<v-list-item v-for="move in assetDetail.moves" :key="move.id" >
+							          	<v-list-item-content>
+									        <v-list-item-title>ke {{move.room_name}} oleh {{move.mover_name}} tanggal {{move.move_at}}</v-list-item-title>
+												        <v-list-item-subtitle><span class="caption"> ({{move.move_description}}) dicatat oleh {{move.created_by}} pada {{move.created_at}}</span>
+												         [<v-icon small @click="editMoveAsset(move)">mdi-pencil</v-icon>]
+												         [<v-icon small @click="deleteMoveAsset(move.id)">delete</v-icon>]
+												        </v-list-item-subtitle>
+									    </v-list-item-content>
+						          	</v-list-item>
+					          	</v-list>
 		          			</v-col>
 		          		</v-row>
 		          	</v-container>
@@ -677,6 +682,16 @@ export default{
 	    	}
 	    	this.editMode = false;
 	    	this.detailModal = false;
+	    },
+	    editMoveAsset: function(item){
+	    	this.move = Object.assign({}, item);
+	    },
+	    deleteMoveAsset: function(id){
+	    	let idx = this.assetDetail.moves.findIndex(item => item.id == id);
+	    	this.assetDetail.moves.splice(idx,1);
+	    },
+	    saveMoveAsset: function(){
+
 	    }
 	},
 	computed: {
