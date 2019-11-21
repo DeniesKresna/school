@@ -157,12 +157,6 @@
 			      >
 			        delete
 			      </v-icon>]
-			      [<v-icon
-			        small
-			        @click="moveItem(item)"
-			      >
-			        mdi-folder-move
-			      </v-icon>]
 			    </template><!--
 			    <template v-slot:no-data>
 			      <v-btn color="primary" @click="initialize">Reset</v-btn>
@@ -170,90 +164,6 @@
 			  </v-data-table>
 		</v-col>
 	</v-row>
-	<!-- ============================ Pindah barang ========================================== -->
-	<v-dialog v-model="moveModal">
-		<v-card>
-			<v-card-title>
-			    <span class="headline">Catatan Perpindahan</span>
-			</v-card-title>
-
-			<v-card-text>
-			    <v-container>
-			        <v-row>
-			        	<v-col cols="12" sm="12" md="8">
-			        		<v-container>
-			        			<v-row>
-						            <v-col cols="12" sm="6" md="4">
-						                <v-text-field v-model="editedMoveItem.asset_name" label="Nama Barang" readonly></v-text-field>
-						            </v-col>
-						            <v-col cols="12" sm="6" md="4">
-						                <v-text-field v-model="editedMoveItem.asset_inventory_code" label="Kode Inventaris" readonly></v-text-field>
-						            </v-col>
-						            <v-col cols="12" sm="6" md="4">
-						                <v-text-field v-model="editedMoveItem.asset_inventory_numb" label="No Inventaris" readonly></v-text-field>
-						            </v-col>
-						            <v-col cols="12" sm="6" md="4">
-						                <v-text-field v-model="editedMoveItem.asset_serial_numb" label="Serial Number" readonly></v-text-field>
-						            </v-col>
-						            <v-col cols="12" sm="6" md="4">
-						                <v-autocomplete v-model="editedMoveItem.mover_id" label="Pemindah" :items="autocompleteUser"
-												    ></v-autocomplete>
-						            </v-col>
-						            <v-col cols="12" sm="6" md="4">
-						            	<v-datetime-picker label="Tanggal pindah" v-model="editedMoveItem.move_at"> </v-datetime-picker><!--
-									    <v-menu
-									        v-model="moveDateTimeMenu"
-									        :close-on-content-click="false"
-									        :nudge-right="40"
-									        transition="scale-transition"
-									        offset-y
-									        min-width="290px"
-									    >
-									        <template v-slot:activator="{ on }">
-									            <v-text-field
-										            v-model="editedMoveItem.move_at"
-										            label="Tanggal Dipindah"
-										            readonly
-										            v-on="on"
-										        ></v-text-field>
-										    </template>
-									        <v-date-picker v-model="editedMoveItem.move_at" @input="moveDateMenu = false"></v-date-picker>
-									    </v-menu>-->
-									</v-col>
-						            <v-col cols="12" sm="6" md="4">
-						                <v-autocomplete v-model="editedMoveItem.room_id" label="Dipindah di" :items="autocompleteRoom"
-												    ></v-autocomplete>
-						            </v-col>
-						            <v-col cols="12" sm="6" md="6">
-						                <v-text-field v-model="editedMoveItem.move_description" label="Keterangan"></v-text-field>
-						            </v-col>
-						        </v-row>
-						    </v-container>
-						</v-col>
-						<v-col cols="12" sm="12" md="4">
-			        		<v-card flat>
-					          <v-card-text>
-					          	<v-list-item three-line v-for="move in editedMoveItem.moves" :key="move.id">
-						          	<v-list-item-content>
-								        <v-list-item-title>ke {{move.room_name}} oleh {{move.mover_name}} <span></span></v-list-item-title>
-								        <v-list-item-subtitle><span class="caption">tanggal {{move.move_at}} ({{move.move_description}}) dicatat oleh {{move.created_by}} pada {{move.created_at}}</span></v-list-item-subtitle>
-								    </v-list-item-content>
-					          	</v-list-item>
-					           </v-card-text>
-					        </v-card>
-					    </v-col>
-			        </v-row>
-			    </v-container>
-			</v-card-text>
-
-			<v-card-actions>
-			    <div class="flex-grow-1"></div>
-			    <v-btn color="blue darken-1" text @click="closeMoveModal">Cancel</v-btn>
-			    <v-btn color="blue darken-1" text @click="saveAssetMove">Pindah</v-btn>
-			</v-card-actions>
-		</v-card>
-	</v-dialog>
-	<!-- ============================ Pindah barang ========================================== -->
 	<v-dialog v-model="detailModal">
 		<v-card>
 		    <v-tabs
@@ -407,19 +317,19 @@
 									        ></v-text-field>
 						                </v-col>
 						                <v-col>
-						                	<v-btn color="green darken-1" text @click="moveAsset" v-if="noNullMoveInput">Pindah Asset</v-btn>
+						                	<v-btn color="green darken-1" text @click="saveMoveAsset" v-if="noNullMoveInput">Pindah Asset</v-btn>
 						                </v-col>
 		          					</v-row>
 		          				</v-container>
 		          			</v-col>
 		          			<v-col cols="12">
 		          				<v-list :three-line="false">
-			          				<v-list-item v-for="move in assetDetail.moves" :key="move.id" >
+			          				<v-list-item v-for="mofe in assetDetail.moves" :key="mofe.id" >
 							          	<v-list-item-content>
-									        <v-list-item-title>ke {{move.room_name}} oleh {{move.mover_name}} tanggal {{move.move_at}}</v-list-item-title>
-												        <v-list-item-subtitle><span class="caption"> ({{move.move_description}}) dicatat oleh {{move.created_by}} pada {{move.created_at}}</span>
-												         [<v-icon small @click="editMoveAsset(move)">mdi-pencil</v-icon>]
-												         [<v-icon small @click="deleteMoveAsset(move.id)">delete</v-icon>]
+									        <v-list-item-title>ke {{mofe.room_name}} oleh {{mofe.mover_name}} tanggal {{mofe.move_at}}</v-list-item-title>
+												        <v-list-item-subtitle><span class="caption"> ({{mofe.move_description}}) dicatat oleh {{mofe.created_by}} pada {{mofe.created_at}}</span>
+												         [<v-icon small @click="editMoveAsset(mofe)">mdi-pencil</v-icon>]
+												         [<v-icon small @click="deleteMoveAsset(mofe.id)">delete</v-icon>]
 												        </v-list-item-subtitle>
 									    </v-list-item-content>
 						          	</v-list-item>
@@ -488,8 +398,6 @@ export default{
 			editedIndex: -1,
 
 			//move data
-			moveModal: false,
-			editedMoveItem: {},
 			receiveBillDateMenu: false,
 			move: {},
 			//moveDateMenu: false,
@@ -627,18 +535,7 @@ export default{
 	    		});
 	    	}
 	    },
-	    //move item
-	    moveItem: function(item){
-	    	this.editedMoveItem = Object.assign({}, item);
-	    	axios.get(this.$store.state.apiUrl + 'move/show/' + item.id).then(response=>{
-	    		this.editedMoveItem.moves = response.data.moves;
-	    		this.moveModal = true;
-	    	});
-	    },
-	    closeMoveModal: function(){
-	    	this.editedMoveItem = {};
-	    	this.moveModal = false;
-	    },
+	    /*
 	    saveAssetMove: function(){
 	    	axios.post(this.$store.state.apiUrl + 'move/' + this.assetDetail.asset.id,{
 	    		editedItem: this.move	
@@ -646,7 +543,7 @@ export default{
 	    		this.$swal("Good job!", response.data.message, "success");
 	    		this.detailItem(this.assetDetail.asset);
 	    	});
-	    },
+	    },*/
 
 	    //detail item
 	    detailItem: function(item){
@@ -687,11 +584,25 @@ export default{
 	    	this.move = Object.assign({}, item);
 	    },
 	    deleteMoveAsset: function(id){
-	    	let idx = this.assetDetail.moves.findIndex(item => item.id == id);
-	    	this.assetDetail.moves.splice(idx,1);
+	    	axios.delete(this.$store.state.apiUrl + 'move/' + id).then(response=>{
+	    		this.$swal("Berhasil!", response.data.message, "success");
+	    		let idx = this.assetDetail.moves.findIndex(item => item.id == id);
+	    		this.assetDetail.moves.splice(idx,1);
+	    	});
 	    },
 	    saveMoveAsset: function(){
-
+	    	if(typeof this.move.id == 'undefined'){
+	    		axios.post(this.$store.state.apiUrl + 'move/' + this.assetDetail.asset.id, {editedItem: this.move}).then(response=>{
+	    			this.$swal("Berhasil!", response.data.message, "success");
+	    			this.assetDetail.moves.push(Object.assign({}, this.move));
+	    			this.assetDetail.moves.sort((a,b)=>(a.move_at > b.move_at) ? 1 : ((b.move_at > a.move_at) ? -1 : 0));
+	    		});
+	    	}
+	    	else {
+	    		axios.patch(this.$store.state.apiUrl + 'move/' + this.move.id).then(response=>{
+					this.$swal("Berhasil!", response.data.message, "success");
+	    		});
+	    	}
 	    }
 	},
 	computed: {
@@ -704,7 +615,7 @@ export default{
 			}
 		},
 		noNullMoveInput: function(){
-			for(prop in this.move){
+			for(let prop in this.move){
 				if(typeof this.move[prop] == 'null' || this.move[prop] == ''){
 					return false;
 				}

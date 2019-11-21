@@ -42,4 +42,10 @@ class MoveController extends Controller
                 ->get();
         return response()->json(['message'=>"Berhasil ambil history perpindahan", 'moves'=>$moves]);
     }
+
+    public function delete($id){
+        $move = Move::findOrFail($id)->first();
+        $move->delete();
+        return response()->json(['message'=>"Berhasil hapus pemindahan asset"]);
+    }
 }
