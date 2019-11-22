@@ -580,6 +580,8 @@ export default{
 	    	this.editMode = false;
 	    	this.detailModal = false;
 	    },
+
+	    //============================= move =================================
 	    editMoveAsset: function(item){
 	    	this.move = Object.assign({}, item);
 	    },
@@ -603,6 +605,11 @@ export default{
 					this.$swal("Berhasil!", response.data.message, "success");
 	    		});
 	    	}
+	    },
+	    getAssetMoves: function(){
+	    	axios.get(this.$store.state.apiUrl + 'move').then(response=>{
+	    		this.assetDetail.moves = 
+	    	});
 	    }
 	},
 	computed: {
