@@ -49,7 +49,7 @@ class ReceiveController extends Controller
     	return response()->json(['message'=>"Berhasil tambah penerimaan barang"]);
     }
 
-    public function show($id){
+    public function showAsset($asset_id){
         $receive = DB::table('receives as r')->where('asset_id',$id)
                 ->join('users as u','u.id','=','r.receiver_id')
                 ->join('users as cru','cru.id','=','r.receive_created_by')

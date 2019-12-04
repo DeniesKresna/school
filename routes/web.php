@@ -38,7 +38,7 @@ $router->patch('/asset/detail/{id}','AssetController@updateAll');
 
 //======================Receive==========================
 $router->post('/receive/{asset_id}','ReceiveController@store');
-$router->get('/receive/show/{id}','ReceiveController@show');
+$router->get('/receive/show/{asset_id}','ReceiveController@showAsset');
 
 //======================User==========================
 $router->get('/user/autocomplete','UserController@autocomplete');
@@ -49,5 +49,12 @@ $router->get('/conditiontype/autocomplete','ConditiontypeController@autocomplete
 //======================Move==========================
 //$router->post('/move/{asset_id}','MoveController@store');
 $router->post('/move/{asset_id}','MoveController@store');
-$router->get('/move/show/{asset_id}','MoveController@show');
+$router->patch('/move/{asset_id}/{id}','MoveController@update');
+$router->get('/move/{asset_id}','MoveController@showAsset');
 $router->delete('/move/{id}','MoveController@delete');
+
+//======================Condition==========================
+$router->post('/condition/{asset_id}','ConditionController@store');
+$router->patch('/condition/{asset_id}/{id}','ConditionController@update');
+$router->get('/condition/{asset_id}','ConditionController@showAsset');
+$router->delete('/condition/{id}','ConditionController@delete');

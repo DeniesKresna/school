@@ -273,11 +273,11 @@
 				                </v-col>
 				                <v-col cols="12" sm="6" md="4">
 				                    <v-text-field v-model="assetDetail.receive.receive_sender_identity" label="Pengirim" :readonly="readonly.receive"></v-text-field>
-				                </v-col>
+				                </v-col><!--
 				                <v-col cols="12" sm="6" md="4">
 				                    <v-autocomplete v-model="assetDetail.receive.conditiontype_id" label="Kondisi" :items="autocompleteCondition" :readonly="readonly.receive"
 									    ></v-autocomplete>
-				                </v-col>
+				                </v-col>-->
 				                <v-col cols="12" sm="6" md="4">
 				                    <v-autocomplete v-model="assetDetail.receive.receiver_id" label="Penerima" :items="autocompleteUser" :readonly="readonly.receive"
 									    ></v-autocomplete>
@@ -302,22 +302,22 @@
 		          				<v-container>
 		          					<v-row>
 		          						<v-col>
-		          							<v-datetime-picker label="Tanggal Pindah" v-model="move.move_at" :disabled="readonly.move" timeFormat="HH:mm:ss"> </v-datetime-picker>
+		          							<v-datetime-picker label="Tanggal Pindah" v-model="move.move_at" :disabled="readonly.moves" timeFormat="HH:mm:ss"> </v-datetime-picker>
 		          						</v-col>
 		          						<v-col>
-						                    <v-autocomplete v-model="move.room_id" label="Ruang" :items="autocompleteRoom" :readonly="readonly.move"
+						                    <v-autocomplete v-model="move.room_id" label="Ruang" :items="autocompleteRoom" :readonly="readonly.moves"
 											    ></v-autocomplete>
 						                </v-col>
 		          						<v-col>
-						                    <v-autocomplete v-model="move.mover_id" label="Pemindah" :items="autocompleteUser" :readonly="readonly.move"
+						                    <v-autocomplete v-model="move.mover_id" label="Pemindah" :items="autocompleteUser" :readonly="readonly.moves"
 											    ></v-autocomplete>
 						                </v-col>
 		          						<v-col>
-						                    <v-text-field label="Keterangan" v-model="move.move_description" :readonly="readonly.move"
+						                    <v-text-field label="Keterangan" v-model="move.move_description" :readonly="readonly.moves"
 									        ></v-text-field>
 						                </v-col>
 						                <v-col>
-						                	<v-btn color="green darken-1" text @click="saveMoveAsset" v-if="noNullMoveInput">Pindah Asset</v-btn>
+						                	<v-btn color="green darken-1" text outlined @click="saveMoveAsset" v-if="noNullMoveInput"><span v-if="move.id">Edit Pindah Asset</span><span v-else>Pindah Asset</span></v-btn>
 						                </v-col>
 		          					</v-row>
 		          				</v-container>
@@ -342,7 +342,49 @@
 		      </v-tab-item>
 		      <v-tab-item value="tab-4">
 		        <v-card flat>
-		          <v-card-text>ini kondisi</v-card-text>
+		          <v-card-text>
+		          	<v-container>
+		          		<v-row>
+		          			<v-col cols="12">
+		          				<v-container>
+		          					<v-row>
+		          						<v-col>
+		          							<v-datetime-picker label="Tanggal Pindah" v-model="condition.condition_at" :disabled="readonly.moves" timeFormat="HH:mm:ss"> </v-datetime-picker>
+		          						</v-col>
+		          						<v-col>
+						                    <v-autocomplete v-model="move.room_id" label="Ruang" :items="autocompleteRoom" :readonly="readonly.moves"
+											    ></v-autocomplete>
+						                </v-col>
+		          						<v-col>
+						                    <v-autocomplete v-model="move.mover_id" label="Pemindah" :items="autocompleteUser" :readonly="readonly.moves"
+											    ></v-autocomplete>
+						                </v-col>
+		          						<v-col>
+						                    <v-text-field label="Keterangan" v-model="move.move_description" :readonly="readonly.moves"
+									        ></v-text-field>
+						                </v-col>
+						                <v-col>
+						                	<v-btn color="green darken-1" text outlined @click="saveMoveAsset" v-if="noNullMoveInput"><span v-if="move.id">Edit Pindah Asset</span><span v-else>Pindah Asset</span></v-btn>
+						                </v-col>
+		          					</v-row>
+		          				</v-container>
+		          			</v-col>
+		          			<v-col cols="12">
+		          				<v-list :three-line="false">
+			          				<v-list-item v-for="mofe in assetDetail.moves" :key="mofe.id" >
+							          	<v-list-item-content>
+									        <v-list-item-title>ke {{mofe.room_name}} oleh {{mofe.mover_name}} tanggal {{mofe.move_at}}</v-list-item-title>
+												        <v-list-item-subtitle><span class="caption"> ({{mofe.move_description}}) dicatat oleh {{mofe.created_by}} pada {{mofe.created_at}}</span>
+												         [<v-icon small @click="editMoveAsset(mofe)">mdi-pencil</v-icon>]
+												         [<v-icon small @click="deleteMoveAsset(mofe.id)">delete</v-icon>]
+												        </v-list-item-subtitle>
+									    </v-list-item-content>
+						          	</v-list-item>
+					          	</v-list>
+		          			</v-col>
+		          		</v-row>
+		          	</v-container>
+		          </v-card-text>
 		        </v-card>
 		      </v-tab-item>
 		    </v-tabs-items>
@@ -397,10 +439,9 @@ export default{
 			editedItem: {},
 			editedIndex: -1,
 
-			//move data
 			receiveBillDateMenu: false,
 			move: {},
-			//moveDateMenu: false,
+			condition: {},
 
 			//detail data
 			detailModal: false,
@@ -414,7 +455,8 @@ export default{
 			readonly: {
 				asset: true,
 				receive: true,
-				move: true
+				moves: true,
+				conditions: true
 			},
 			editMode: false
 		}
@@ -557,7 +599,7 @@ export default{
 	    		asset: false,
 				receive: false,
 				conditions: false,
-				move: false
+				moves: false
 	    	}
 	    	this.editMode = true;
 	    },
@@ -575,7 +617,7 @@ export default{
 	    		asset: true,
 				receive: true,
 				conditions: true,
-				move: true
+				moves: true
 	    	}
 	    	this.editMode = false;
 	    	this.detailModal = false;
@@ -588,27 +630,66 @@ export default{
 	    deleteMoveAsset: function(id){
 	    	axios.delete(this.$store.state.apiUrl + 'move/' + id).then(response=>{
 	    		this.$swal("Berhasil!", response.data.message, "success");
+	    		this.getMoveAsset();
+	    		/*
 	    		let idx = this.assetDetail.moves.findIndex(item => item.id == id);
-	    		this.assetDetail.moves.splice(idx,1);
+	    		this.assetDetail.moves.splice(idx,1);*/
 	    	});
 	    },
 	    saveMoveAsset: function(){
 	    	if(typeof this.move.id == 'undefined'){
 	    		axios.post(this.$store.state.apiUrl + 'move/' + this.assetDetail.asset.id, {editedItem: this.move}).then(response=>{
 	    			this.$swal("Berhasil!", response.data.message, "success");
+	    			this.move = {};
+	    			this.getMoveAsset();
+	    			/*
 	    			this.assetDetail.moves.push(Object.assign({}, this.move));
-	    			this.assetDetail.moves.sort((a,b)=>(a.move_at > b.move_at) ? 1 : ((b.move_at > a.move_at) ? -1 : 0));
+	    			this.assetDetail.moves.sort((a,b)=>(a.move_at > b.move_at) ? 1 : ((b.move_at > a.move_at) ? -1 : 0));*/
 	    		});
 	    	}
 	    	else {
-	    		axios.patch(this.$store.state.apiUrl + 'move/' + this.move.id).then(response=>{
+	    		axios.patch(this.$store.state.apiUrl + 'move/' + this.assetDetail.asset.id + '/' + this.move.id, {editedItem: this.move}).then(response=>{
 					this.$swal("Berhasil!", response.data.message, "success");
+					this.move = {};
+					this.getMoveAsset();
 	    		});
 	    	}
 	    },
-	    getAssetMoves: function(){
-	    	axios.get(this.$store.state.apiUrl + 'move').then(response=>{
-	    		this.assetDetail.moves = 
+	    getMoveAsset: function(){
+	    	axios.get(this.$store.state.apiUrl + 'move/' + this.assetDetail.asset.id).then(response=>{
+	    		this.assetDetail.moves = response.data.moves;
+	    	});
+	    },
+
+	    //============================= condition =================================
+	    editConditionAsset: function(item){
+	    	this.condition = Object.assign({}, item);
+	    },
+	    deleteConditionAsset: function(id){
+	    	axios.delete(this.$store.state.apiUrl + 'condition/' + id).then(response=>{
+	    		this.$swal("Berhasil!", response.data.message, "success");
+	    		this.getConditionAsset();
+	    	});
+	    },
+	    saveConditionAsset: function(){
+	    	if(typeof this.condition.id == 'undefined'){
+	    		axios.post(this.$store.state.apiUrl + 'condition/' + this.assetDetail.asset.id, {editedItem: this.condition}).then(response=>{
+	    			this.$swal("Berhasil!", response.data.message, "success");
+	    			this.condition = {};
+	    			this.getConditionAsset();
+	    		});
+	    	}
+	    	else {
+	    		axios.patch(this.$store.state.apiUrl + 'condition/' + this.assetDetail.asset.id + '/' + this.condition.id, {editedItem: this.condition}).then(response=>{
+					this.$swal("Berhasil!", response.data.message, "success");
+					this.condition = {};
+					this.getConditionAsset();
+	    		});
+	    	}
+	    },
+	    getConditionAsset: function(){
+	    	axios.get(this.$store.state.apiUrl + 'condition/' + this.assetDetail.asset.id).then(response=>{
+	    		this.assetDetail.conditions = response.data.conditions;
 	    	});
 	    }
 	},

@@ -18,6 +18,7 @@ class CreateReceives extends Migration
             $table->integer('asset_id');
             $table->datetime('receive_at');
             $table->string('receive_sender_identity');
+            $table->string('receive_condition');
             $table->date('receive_bill_date');
             $table->string('receive_bill_number');
             $table->integer('receiver_id')->nullable();
